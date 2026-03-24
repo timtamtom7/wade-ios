@@ -21,6 +21,8 @@ struct GraphicsPreviewView: View {
                         tabButton("Messages", tag: 3)
                         tabButton("Reports", tag: 4)
                         tabButton("Budget", tag: 5)
+                        tabButton("Wallet", tag: 6)
+                        tabButton("Bills", tag: 7)
                     }
                     .padding(.horizontal, 16)
                 }
@@ -45,6 +47,12 @@ struct GraphicsPreviewView: View {
 
                     BudgetProgressPreviewView()
                         .tag(5)
+
+                    SharedWalletPreviewView()
+                        .tag(6)
+
+                    BillsListPreviewView()
+                        .tag(7)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
             }
@@ -622,6 +630,553 @@ struct BudgetProgressPreviewView: View {
                 }
             }
             .frame(height: 8)
+        }
+    }
+
+    private func formatCurrency(_ amount: Double) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = "USD"
+        return formatter.string(from: NSNumber(value: amount)) ?? "$\(String(format: "%.2f", amount))"
+    }
+}
+
+// MARK: - R5: Shared Wallet UI Preview
+
+struct SharedWalletPreviewView: View {
+    private let backgroundColor = Color(hex: "0d0d0e")
+    private let cardColor = Color(hex: "1c1c1e")
+    private let textColor = Color(hex: "f5f5f7")
+    private let secondaryColor = Color(hex: "8a8a8a")
+    private let expenseRed = Color(hex: "ff453a")
+    private let incomeGreen = Color(hex: "34c759")
+    private let warningOrange = Color(hex: "ff9f0a")
+    private let accentYellow = Color(hex: "ffd60a")
+
+    private let sampleMembers = [
+        WalletMember(name: "Alex", colorHex: "0a84ff"),
+        WalletMember(name: "Sam", colorHex: "ff9f0a")
+    ]
+
+    var body: some View {
+        ZStack {
+            backgroundColor.ignoresSafeArea()
+
+            ScrollView {
+                VStack(spacing: 32) {
+                    Text("Shared Wallet UI")
+                        .font(.system(size: 22, weight: .bold))
+                        .foregroundColor(textColor)
+                        .padding(.top, 20)
+
+                    // Shared wallet in-chat card
+                    previewSection(title: "Shared Wallet Card (In-chat)") {
+                        sharedWalletCardPreview
+                            .padding(.horizontal, 16)
+                    }
+
+                    // Member avatars
+                    previewSection(title: "Member Avatars") {
+                        HStack(spacing: 16) {
+                            ForEach(sampleMembers) { member in
+                                VStack(spacing: 6) {
+                                    Circle()
+                                        .fill(Color(hex: member.colorHex))
+                                        .frame(width: 56, height: 56)
+                                        .overlay(
+                                            Text(String(member.name.prefix(1)))
+                                                .font(.system(size: 22, weight: .bold))
+                                                .foregroundColor(.white)
+                                        )
+
+                                    Text(member.name)
+                                        .font(.system(size: 13, weight: .medium))
+                                        .foregroundColor(textColor)
+
+                                    Text("Paid £340")
+                                        .font(.system(size: 11))
+                                        .foregroundColor(secondaryColor)
+                                }
+                            }
+                        }
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(cardColor)
+                        )
+                        .padding(.horizontal, 16)
+                    }
+
+                    // Budget progress
+                    previewSection(title: "Shared Budget Progress") {
+                        VStack(spacing: 12) {
+                            HStack {
+                                Text("£1,847")
+                                    .font(.system(size: 24, weight: .bold, design: .monospaced))
+                                    .foregroundColor(textColor)
+                                Text("/ £2,500")
+                                    .font(.system(size: 16, design: .monospaced))
+                                    .foregroundColor(secondaryColor)
+                                Spacer()
+                                Text("74%")
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .foregroundColor(warningOrange)
+                            }
+
+                            GeometryReader { geo in
+                                ZStack(alignment: .leading) {
+                                    RoundedRectangle(cornerRadius: 6)
+                                        .fill(Color(hex: "2a2a2e"))
+                                        .frame(height: 10)
+                                    RoundedRectangle(cornerRadius: 6)
+                                        .fill(warningOrange)
+                                        .frame(width: geo.size.width * 0.74, height: 10)
+                                }
+                            }
+                            .frame(height: 10)
+
+                            HStack {
+                                Text("£653 left")
+                                    .font(.system(size: 12))
+                                    .foregroundColor(secondaryColor)
+                                Spacer()
+                                Text("Groceries: £340 · Rent: £800")
+                                    .font(.system(size: 11))
+                                    .foregroundColor(secondaryColor)
+                            }
+                        }
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(cardColor)
+                        )
+                        .padding(.horizontal, 16)
+                    }
+
+                    // Settling up
+                    previewSection(title: "Settling Up") {
+                        VStack(spacing: 10) {
+                            HStack {
+                                Circle()
+                                    .fill(Color(hex: "ff9f0a"))
+                                    .frame(width: 28, height: 28)
+                                    .overlay(
+                                        Text("S")
+                                            .font(.system(size: 13, weight: .bold))
+                                            .foregroundColor(.white)
+                                    )
+                                Text("Sam owes Alex")
+                                    .font(.system(size: 14))
+                                    .foregroundColor(textColor)
+                                Spacer()
+                                Text("£127.50")
+                                    .font(.system(size: 15, weight: .semibold, design: .monospaced))
+                                    .foregroundColor(expenseRed)
+                            }
+
+                            Text("Based on 8 shared expenses this month")
+                                .font(.system(size: 11))
+                                .foregroundColor(secondaryColor)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(cardColor)
+                        )
+                        .padding(.horizontal, 16)
+                    }
+
+                    Spacer(minLength: 40)
+                }
+            }
+        }
+        .preferredColorScheme(.dark)
+    }
+
+    private var sharedWalletCardPreview: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 6) {
+                Text("👥")
+                    .font(.system(size: 18))
+                Text("Shared Wallet")
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(textColor)
+                Spacer()
+                Text("This month")
+                    .font(.system(size: 11))
+                    .foregroundColor(secondaryColor)
+            }
+
+            Divider()
+                .background(secondaryColor.opacity(0.3))
+
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("£1,847.00")
+                        .font(.system(size: 22, weight: .bold, design: .monospaced))
+                        .foregroundColor(textColor)
+                    Text("2 members")
+                        .font(.system(size: 11))
+                        .foregroundColor(secondaryColor)
+                }
+                Spacer()
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text("74% of budget")
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(warningOrange)
+                    Text("£653 left")
+                        .font(.system(size: 11, design: .monospaced))
+                        .foregroundColor(secondaryColor)
+                }
+            }
+
+            GeometryReader { geo in
+                ZStack(alignment: .leading) {
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color(hex: "2a2a2e"))
+                        .frame(height: 6)
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(warningOrange)
+                        .frame(width: geo.size.width * 0.74, height: 6)
+                }
+            }
+            .frame(height: 6)
+
+            HStack(spacing: 8) {
+                ForEach(sampleMembers) { member in
+                    HStack(spacing: 4) {
+                        Circle()
+                            .fill(Color(hex: member.colorHex))
+                            .frame(width: 20, height: 20)
+                            .overlay(
+                                Text(String(member.name.prefix(1)))
+                                    .font(.system(size: 9, weight: .bold))
+                                    .foregroundColor(.white)
+                            )
+                        Text(member.name)
+                            .font(.system(size: 11))
+                            .foregroundColor(secondaryColor)
+                    }
+                }
+                Spacer()
+                Image(systemName: "crown.fill")
+                    .font(.system(size: 10))
+                    .foregroundColor(accentYellow)
+                Text("Sam spent most")
+                    .font(.system(size: 10))
+                    .foregroundColor(secondaryColor)
+            }
+        }
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(cardColor)
+        )
+    }
+
+    private func previewSection<Content: View>(title: String, @ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title)
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundColor(secondaryColor)
+                .padding(.horizontal, 16)
+
+            content()
+                .padding(.vertical, 12)
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(Color(hex: "111112"))
+                )
+                .padding(.horizontal, 16)
+        }
+    }
+}
+
+// MARK: - R3-5: Bills List Visual Preview
+
+struct BillsListPreviewView: View {
+    private let backgroundColor = Color(hex: "0d0d0e")
+    private let cardColor = Color(hex: "1c1c1e")
+    private let textColor = Color(hex: "f5f5f7")
+    private let secondaryColor = Color(hex: "8a8a8a")
+    private let expenseRed = Color(hex: "ff453a")
+    private let incomeGreen = Color(hex: "34c759")
+    private let warningOrange = Color(hex: "ff9f0a")
+
+    private let sampleBills = [
+        ("Netflix", "Monthly", 15.99, 1),
+        ("Spotify", "Monthly", 9.99, 1),
+        ("Gym", "Monthly", 49.99, 2),
+        ("Internet", "Monthly", 39.99, 5),
+        ("Phone", "Monthly", 25.00, 7),
+    ]
+
+    var body: some View {
+        ZStack {
+            backgroundColor.ignoresSafeArea()
+
+            ScrollView {
+                VStack(spacing: 32) {
+                    Text("Bills List UI")
+                        .font(.system(size: 22, weight: .bold))
+                        .foregroundColor(textColor)
+                        .padding(.top, 20)
+
+                    // Bills list in recurring service preview
+                    previewSection(title: "Bills List (In-chat)") {
+                        billsCardPreview
+                            .padding(.horizontal, 16)
+                    }
+
+                    // Monthly total
+                    previewSection(title: "Monthly Bills Total") {
+                        VStack(spacing: 12) {
+                            HStack {
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Monthly Bills")
+                                        .font(.system(size: 13))
+                                        .foregroundColor(secondaryColor)
+                                    Text("£140.96")
+                                        .font(.system(size: 26, weight: .bold, design: .monospaced))
+                                        .foregroundColor(expenseRed)
+                                }
+                                Spacer()
+                                VStack(alignment: .trailing, spacing: 2) {
+                                    Text("5 subscriptions")
+                                        .font(.system(size: 12))
+                                        .foregroundColor(secondaryColor)
+                                    Text("Due this month")
+                                        .font(.system(size: 11))
+                                        .foregroundColor(warningOrange)
+                                }
+                            }
+
+                            Divider()
+                                .background(secondaryColor.opacity(0.3))
+
+                            // Category breakdown
+                            HStack(spacing: 16) {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    billMiniRow(icon: "🎵", name: "Entertainment", amount: 25.98)
+                                    billMiniRow(icon: "💪", name: "Health", amount: 49.99)
+                                    billMiniRow(icon: "📱", name: "Utilities", amount: 64.99)
+                                }
+                                Spacer()
+                            }
+                        }
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(cardColor)
+                        )
+                        .padding(.horizontal, 16)
+                    }
+
+                    // Upcoming bills timeline
+                    previewSection(title: "Bills Timeline") {
+                        VStack(spacing: 0) {
+                            ForEach(Array(sampleBills.enumerated()), id: \.offset) { index, bill in
+                                HStack(spacing: 12) {
+                                    // Timeline dot
+                                    VStack(spacing: 0) {
+                                        Circle()
+                                            .fill(dotColor(days: bill.3))
+                                            .frame(width: 10, height: 10)
+                                        if index < sampleBills.count - 1 {
+                                            Rectangle()
+                                                .fill(secondaryColor.opacity(0.3))
+                                                .frame(width: 2, height: 40)
+                                        }
+                                    }
+
+                                    HStack(spacing: 8) {
+                                        Text(bill.0)
+                                            .font(.system(size: 14, weight: .medium))
+                                            .foregroundColor(textColor)
+
+                                        Spacer()
+
+                                        VStack(alignment: .trailing, spacing: 2) {
+                                            Text(formatCurrency(bill.2))
+                                                .font(.system(size: 13, design: .monospaced))
+                                                .foregroundColor(dueColor(days: bill.3))
+                                            Text(daysLabel(bill.3))
+                                                .font(.system(size: 10))
+                                                .foregroundColor(secondaryColor)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(cardColor)
+                        )
+                        .padding(.horizontal, 16)
+                    }
+
+                    // Budget progress for bills
+                    previewSection(title: "Bills Budget") {
+                        VStack(spacing: 10) {
+                            HStack {
+                                Text("Bills budget")
+                                    .font(.system(size: 13))
+                                    .foregroundColor(secondaryColor)
+                                Spacer()
+                                Text("£200/month")
+                                    .font(.system(size: 13, design: .monospaced))
+                                    .foregroundColor(textColor)
+                            }
+
+                            GeometryReader { geo in
+                                ZStack(alignment: .leading) {
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .fill(Color(hex: "2a2a2e"))
+                                        .frame(height: 8)
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .fill(incomeGreen)
+                                        .frame(width: geo.size.width * 0.70, height: 8)
+                                }
+                            }
+                            .frame(height: 8)
+
+                            HStack {
+                                Text("£140.96 spent")
+                                    .font(.system(size: 11, design: .monospaced))
+                                    .foregroundColor(secondaryColor)
+                                Spacer()
+                                Text("£59.04 left")
+                                    .font(.system(size: 11, design: .monospaced))
+                                    .foregroundColor(incomeGreen)
+                            }
+                        }
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(cardColor)
+                        )
+                        .padding(.horizontal, 16)
+                    }
+
+                    Spacer(minLength: 40)
+                }
+            }
+        }
+        .preferredColorScheme(.dark)
+    }
+
+    private var billsCardPreview: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 6) {
+                Text("📅")
+                    .font(.system(size: 16))
+                Text("Upcoming Bills")
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(textColor)
+                Spacer()
+                Text("5 this week")
+                    .font(.system(size: 11))
+                    .foregroundColor(warningOrange)
+            }
+
+            Divider()
+                .background(secondaryColor.opacity(0.3))
+
+            ForEach(Array(sampleBills.enumerated()), id: \.offset) { _, bill in
+                HStack(spacing: 8) {
+                    ZStack {
+                        Circle()
+                            .fill(dueColor(days: bill.3).opacity(0.2))
+                            .frame(width: 32, height: 32)
+
+                        if bill.3 == 1 {
+                            Text("Tmrw")
+                                .font(.system(size: 7, weight: .bold))
+                                .foregroundColor(dueColor(days: bill.3))
+                        } else if bill.3 == 0 {
+                            Text("Today")
+                                .font(.system(size: 7, weight: .bold))
+                                .foregroundColor(dueColor(days: bill.3))
+                        } else {
+                            Text("\(bill.3)d")
+                                .font(.system(size: 9, weight: .bold))
+                                .foregroundColor(dueColor(days: bill.3))
+                        }
+                    }
+                    .frame(width: 32)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(bill.0)
+                            .font(.system(size: 13, weight: .medium))
+                            .foregroundColor(textColor)
+                        Text(bill.1)
+                            .font(.system(size: 10))
+                            .foregroundColor(secondaryColor)
+                    }
+
+                    Spacer()
+
+                    Text(formatCurrency(bill.2))
+                        .font(.system(size: 13, design: .monospaced))
+                        .foregroundColor(dueColor(days: bill.3))
+                }
+            }
+        }
+        .padding(16)
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(cardColor)
+        )
+    }
+
+    private func billMiniRow(icon: String, name: String, amount: Double) -> some View {
+        HStack(spacing: 6) {
+            Text(icon)
+                .font(.system(size: 12))
+            Text(name)
+                .font(.system(size: 12))
+                .foregroundColor(textColor)
+            Spacer()
+            Text(formatCurrency(amount))
+                .font(.system(size: 12, design: .monospaced))
+                .foregroundColor(secondaryColor)
+        }
+    }
+
+    private func dueColor(days: Int) -> Color {
+        if days == 0 { return expenseRed }
+        if days <= 2 { return warningOrange }
+        return incomeGreen
+    }
+
+    private func dotColor(days: Int) -> Color {
+        if days == 0 { return expenseRed }
+        if days <= 2 { return warningOrange }
+        return incomeGreen
+    }
+
+    private func daysLabel(_ days: Int) -> String {
+        if days == 0 { return "Due today" }
+        if days == 1 { return "Due tomorrow" }
+        return "In \(days) days"
+    }
+
+    private func previewSection<Content: View>(title: String, @ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title)
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundColor(secondaryColor)
+                .padding(.horizontal, 16)
+
+            content()
+                .padding(.vertical, 12)
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(Color(hex: "111112"))
+                )
+                .padding(.horizontal, 16)
         }
     }
 

@@ -96,6 +96,8 @@ enum MessageType: String {
     case error
     case exportReady
     case yearlySummary
+    case aiInsight
+    case sharedWalletSummary
 }
 
 struct Message: Identifiable {
@@ -114,6 +116,8 @@ struct Message: Identifiable {
     let recurringBills: [RecurringExpense]?
     let exportFileURL: URL?
     let yearlySummaryData: YearlySummary?
+    let aiInsight: AIInsight?
+    let sharedWalletData: SharedWalletSummary?
     let messageType: MessageType
 
     init(
@@ -132,6 +136,8 @@ struct Message: Identifiable {
         recurringBills: [RecurringExpense]? = nil,
         exportFileURL: URL? = nil,
         yearlySummaryData: YearlySummary? = nil,
+        aiInsight: AIInsight? = nil,
+        sharedWalletData: SharedWalletSummary? = nil,
         messageType: MessageType = .text
     ) {
         self.id = id
@@ -149,6 +155,8 @@ struct Message: Identifiable {
         self.recurringBills = recurringBills
         self.exportFileURL = exportFileURL
         self.yearlySummaryData = yearlySummaryData
+        self.aiInsight = aiInsight
+        self.sharedWalletData = sharedWalletData
         self.messageType = messageType
     }
 
@@ -227,6 +235,52 @@ struct Message: Identifiable {
         )
     }
 
+    static func aiInsightMessage(_ insight: AIInsight) -> Message {
+        Message(
+            role: .wade,
+            text: aiInsightText(insight),
+            aiInsight: insight,
+            messageType: .aiInsight
+        )
+    }
+
+    static func sharedWalletSummaryMessage(_ summary: SharedWalletSummary) -> Message {
+        Message(
+            role: .wade,
+            text: sharedWalletSummaryText(summary),
+            sharedWalletData: summary,
+            messageType: .sharedWalletSummary
+        )
+    }
+
+    private static func aiInsightText(_ insight: AIInsight) -> String {
+        "\(insight.emoji) \(insight.headline)\n\n\(insight.body)"
+    }
+
+    private static func sharedWalletSummaryText(_ summary: SharedWalletSummary) -> String {
+        var text = "👥 Shared Wallet Summary\n\n"
+        text += "This month: \(formatCurrency(summary.totalSpent))\n"
+        text += "\(summary.memberCount) members\n"
+
+        if let budget = summary.sharedBudget {
+            let pct = Int((summary.totalSpent / budget.limit) * 100)
+            text += "Budget: \(pct)% used (\(formatCurrency(budget.limit - summary.totalSpent)) left)\n"
+        }
+
+        if let (name, amount) = summary.topSpender {
+            text += "Top spender: \(name) (\(formatCurrency(amount)))\n"
+        }
+
+        if !summary.owesList.isEmpty {
+            text += "\nWho owes whom:\n"
+            for owe in summary.owesList.prefix(3) {
+                text += "• \(owe.from) owes \(owe.to): \(formatCurrency(owe.amount))\n"
+            }
+        }
+
+        return text.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
     private static func yearlySummaryText(_ summary: YearlySummary) -> String {
         var text = "📅 \(summary.year) Year Summary\n\n"
         text += "Total spent: \(formatCurrency(summary.totalSpent))\n"
@@ -297,5 +351,40 @@ struct Message: Identifiable {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM d"
         return formatter.string(from: date)
+    }
+}
+
+// MARK: - Shared Wallet Summary (for Message payload)
+
+struct SharedWalletSummary {
+    let totalSpent: Double
+    let memberCount: Int
+    let categoryBreakdown: [String: Double]
+    let topSpender: (name: String, amount: Double)?
+    let sharedBudget: SharedBudget?
+    let owesList: [(from: String, to: String, amount: Double)]
+    let currencyCode: String
+
+    init(
+        totalSpent: Double,
+        memberCount: Int,
+        categoryBreakdown: [String: Double],
+        topSpender: (name: String, amount: Double)?,
+        sharedBudget: SharedBudget?,
+        owesList: [(from: String, to: String, amount: Double)],
+        currencyCode: String = "USD"
+    ) {
+        self.totalSpent = totalSpent
+        self.memberCount = memberCount
+        self.categoryBreakdown = categoryBreakdown
+        self.topSpender = topSpender
+        self.sharedBudget = sharedBudget
+        self.owesList = owesList
+        self.currencyCode = currencyCode
+    }
+
+    var budgetProgress: BudgetProgress? {
+        guard let budget = sharedBudget else { return nil }
+        return BudgetProgress(spent: totalSpent, limit: budget.limit, currencyCode: budget.currencyCode)
     }
 }

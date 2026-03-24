@@ -44,6 +44,10 @@ struct WadeResponseCard: View {
                     yearlySummaryContent
                 case .exportReady:
                     exportReadyContent
+                case .aiInsight:
+                    aiInsightContent
+                case .sharedWalletSummary:
+                    sharedWalletContent
                 default:
                     if let tx = message.transaction {
                         transactionContent(tx)
@@ -609,6 +613,186 @@ struct WadeResponseCard: View {
                 }
                 .foregroundColor(Color(hex: "5ac8fa"))
                 .padding(.top, 4)
+            }
+        }
+    }
+
+    // MARK: - AI Insight Content
+
+    private var aiInsightContent: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            if let insight = message.aiInsight {
+                HStack(spacing: 8) {
+                    Text(insight.emoji)
+                        .font(.system(size: 22))
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("AI Insight")
+                            .font(.system(size: 10, weight: .medium))
+                            .foregroundColor(secondaryColor)
+                            .textCase(.uppercase)
+                        Text(insight.headline)
+                            .font(.system(size: 15, weight: .bold))
+                            .foregroundColor(textColor)
+                    }
+                }
+
+                Divider()
+                    .background(secondaryColor.opacity(0.3))
+
+                Text(insight.body)
+                    .font(.system(size: 13))
+                    .foregroundColor(textColor)
+                    .fixedSize(horizontal: false, vertical: true)
+
+                HStack {
+                    Image(systemName: "lightbulb.fill")
+                        .font(.system(size: 11))
+                        .foregroundColor(accentColor)
+                    Text("Powered by Wade AI")
+                        .font(.system(size: 10))
+                        .foregroundColor(secondaryColor)
+                }
+                .padding(.top, 4)
+            }
+        }
+    }
+
+    // MARK: - Shared Wallet Content
+
+    private var sharedWalletContent: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 6) {
+                Text("👥")
+                    .font(.system(size: 18))
+                Text("Shared Wallet")
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(textColor)
+            }
+
+            Divider()
+                .background(secondaryColor.opacity(0.3))
+
+            if let summary = message.sharedWalletData {
+                // Total spent
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("This month")
+                            .font(.system(size: 11))
+                            .foregroundColor(secondaryColor)
+                        Text(formatCurrency(summary.totalSpent))
+                            .font(.system(size: 20, weight: .bold, design: .monospaced))
+                            .foregroundColor(textColor)
+                    }
+                    Spacer()
+                    VStack(alignment: .trailing, spacing: 2) {
+                        Text("\(summary.memberCount) members")
+                            .font(.system(size: 11))
+                            .foregroundColor(secondaryColor)
+                        if let budget = summary.sharedBudget {
+                            let pct = summary.totalSpent / budget.limit
+                            Text("\(Int(pct * 100))% of budget")
+                                .font(.system(size: 11, weight: .medium))
+                                .foregroundColor(pct >= 1.0 ? expenseColor : (pct >= 0.8 ? warningColor : incomeColor))
+                        }
+                    }
+                }
+
+                // Shared budget progress
+                if let budget = summary.sharedBudget {
+                    Divider()
+                        .background(secondaryColor.opacity(0.3))
+
+                    let pct = min(summary.totalSpent / budget.limit, 1.5)
+                    GeometryReader { geo in
+                        ZStack(alignment: .leading) {
+                            RoundedRectangle(cornerRadius: 4)
+                                .fill(Color(hex: "2a2a2e"))
+                                .frame(height: 6)
+                            RoundedRectangle(cornerRadius: 4)
+                                .fill(pct >= 1.0 ? expenseColor : (pct >= 0.8 ? warningColor : incomeColor))
+                                .frame(width: geo.size.width * CGFloat(min(pct, 1.0)), height: 6)
+                        }
+                    }
+                    .frame(height: 6)
+
+                    HStack {
+                        Text("Spent: \(formatCurrency(summary.totalSpent))")
+                            .font(.system(size: 11, design: .monospaced))
+                            .foregroundColor(secondaryColor)
+                        Spacer()
+                        Text("Budget: \(formatCurrency(budget.limit))")
+                            .font(.system(size: 11, design: .monospaced))
+                            .foregroundColor(secondaryColor)
+                    }
+                }
+
+                // Top spender
+                if let (name, amount) = summary.topSpender {
+                    Divider()
+                        .background(secondaryColor.opacity(0.3))
+                    HStack {
+                        Image(systemName: "crown.fill")
+                            .font(.system(size: 11))
+                            .foregroundColor(accentColor)
+                        Text("Top spender: \(name)")
+                            .font(.system(size: 12))
+                            .foregroundColor(textColor)
+                        Spacer()
+                        Text(formatCurrency(amount))
+                            .font(.system(size: 12, design: .monospaced))
+                            .foregroundColor(secondaryColor)
+                    }
+                }
+
+                // Category breakdown
+                if !summary.categoryBreakdown.isEmpty {
+                    Divider()
+                        .background(secondaryColor.opacity(0.3))
+
+                    Text("By category")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(secondaryColor)
+
+                    ForEach(Array(summary.categoryBreakdown.sorted { $0.value > $1.value }.prefix(4)), id: \.key) { cat, amount in
+                        HStack {
+                            Text(cat)
+                                .font(.system(size: 12))
+                                .foregroundColor(textColor)
+                            Spacer()
+                            Text(formatCurrency(amount))
+                                .font(.system(size: 12, design: .monospaced))
+                                .foregroundColor(secondaryColor)
+                        }
+                    }
+                }
+
+                // Who owes whom
+                if !summary.owesList.isEmpty {
+                    Divider()
+                        .background(secondaryColor.opacity(0.3))
+
+                    Text("Settling up")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(secondaryColor)
+
+                    ForEach(Array(summary.owesList.prefix(3).enumerated()), id: \.offset) { _, owe in
+                        HStack {
+                            Text("\(owe.from) owes \(owe.to)")
+                                .font(.system(size: 12))
+                                .foregroundColor(textColor)
+                            Spacer()
+                            Text(formatCurrency(owe.amount))
+                                .font(.system(size: 12, weight: .medium, design: .monospaced))
+                                .foregroundColor(expenseColor)
+                        }
+                    }
+                }
+            } else {
+                Text(message.text)
+                    .font(.system(size: 13))
+                    .foregroundColor(textColor)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
     }

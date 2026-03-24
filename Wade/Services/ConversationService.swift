@@ -12,6 +12,8 @@ final class ConversationService {
     private let recurringService = RecurringExpenseService.shared
     private let currencyService = CurrencyService.shared
     private let exportService = ExportService.shared
+    private let aiInsights = AIInsightsService.shared
+    private let sharedWallet = SharedWalletManager.shared
 
     private var lastBudgetAlert: BudgetAlert?
     private var lastBudgetAlertMonth: Int = -1
@@ -157,6 +159,39 @@ final class ConversationService {
             }
         }
 
+        // Handle AI insights query
+        if lowercased.contains("insight") || lowercased.contains("tip") || lowercased.contains("suggestion") || lowercased.contains("save more") {
+            if let insight = aiInsights.getInsightForQuery(text) {
+                return Message.aiInsightMessage(insight)
+            } else {
+                let summary = aiInsights.summaryOfInsights()
+                return Message(role: .wade, text: summary, messageType: .aiInsight)
+            }
+        }
+
+        // Handle shared wallet query
+        if sharedWallet.isEnabled {
+            if lowercased.contains("shared") || lowercased.contains("we spent") || lowercased.contains("our wallet") || lowercased.contains("couple") || lowercased.contains("household") {
+                let summary = buildSharedWalletSummary()
+                return Message.sharedWalletSummaryMessage(summary)
+            }
+
+            // Handle shared budget
+            if lowercased.contains("shared budget") || lowercased.contains("our budget") {
+                if let limit = parser.parseBudgetLimit(text), limit > 0 {
+                    sharedWallet.setSharedBudget(limit: limit)
+                    let total = sharedWallet.totalSpentThisMonth()
+                    let pct = Int((total / limit) * 100)
+                    return Message(
+                        role: .wade,
+                        text: "✅ Shared budget set: \(formatCurrency(limit))\nWe've spent \(formatCurrency(total)) so far this month (\(pct)%).",
+                        sharedWalletData: buildSharedWalletSummary(),
+                        messageType: .sharedWalletSummary
+                    )
+                }
+            }
+        }
+
         // Parse expense
         guard let parsed = parser.parse(text) else {
             let suggestions = [
@@ -295,5 +330,36 @@ final class ConversationService {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyyMMdd"
         return formatter.string(from: Date())
+    }
+
+    private func buildSharedWalletSummary() -> SharedWalletSummary {
+        let wallet = sharedWallet.wallet ?? SharedWallet()
+        let totalSpent = sharedWallet.totalSpentThisMonth()
+        let categoryBreakdown = sharedWallet.categorySpendingThisMonth()
+        let spendingByMember = sharedWallet.spendingByMember()
+
+        var topSpender: (name: String, amount: Double)?
+        for (memberId, amount) in spendingByMember {
+            if let member = wallet.members.first(where: { $0.id == memberId }) {
+                if topSpender == nil || amount > topSpender!.1 {
+                    topSpender = (member.name, amount)
+                }
+            }
+        }
+
+        let owesList = sharedWallet.owes().map { owe -> (from: String, to: String, amount: Double) in
+            let fromName = wallet.members.first(where: { $0.id == owe.from })?.name ?? "Unknown"
+            let toName = wallet.members.first(where: { $0.id == owe.to })?.name ?? "Unknown"
+            return (fromName, toName, owe.amount)
+        }
+
+        return SharedWalletSummary(
+            totalSpent: totalSpent,
+            memberCount: wallet.members.count,
+            categoryBreakdown: categoryBreakdown,
+            topSpender: topSpender,
+            sharedBudget: wallet.monthlyBudget,
+            owesList: owesList
+        )
     }
 }
