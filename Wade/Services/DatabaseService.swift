@@ -95,10 +95,45 @@ final class DatabaseService {
         return fetchAll().filter { $0.date >= monthStart }
     }
 
+    func fetchMonth(year: Int, month: Int) -> [Transaction] {
+        let calendar = Calendar.current
+        guard let monthStart = calendar.date(from: DateComponents(year: year, month: month)),
+              let monthEnd = calendar.date(byAdding: .month, value: 1, to: monthStart) else {
+            return []
+        }
+        return fetchAll().filter { $0.date >= monthStart && $0.date < monthEnd }
+    }
+
+    func fetchLastMonth() -> [Transaction] {
+        let calendar = Calendar.current
+        let now = Date()
+        guard let lastMonthStart = calendar.date(byAdding: .month, value: -1, to: calendar.date(from: calendar.dateComponents([.year, .month], from: now))!),
+              let monthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: now)) else {
+            return []
+        }
+        return fetchAll().filter { $0.date >= lastMonthStart && $0.date < monthStart }
+    }
+
+    func search(query: String) -> [Transaction] {
+        let lowercased = query.lowercased()
+        return fetchAll().filter {
+            $0.category.lowercased().contains(lowercased) ||
+            $0.note.lowercased().contains(lowercased) ||
+            String(format: "%.2f", $0.amount).contains(lowercased)
+        }
+    }
+
     func weeklyStats() -> (expenses: Double, income: Double, net: Double) {
         let thisWeek = fetchThisWeek()
         let expenses = thisWeek.filter { $0.type == .expense }.reduce(0) { $0 + $1.amount }
         let income = thisWeek.filter { $0.type == .income }.reduce(0) { $0 + $1.amount }
+        return (expenses, income, income - expenses)
+    }
+
+    func monthlyStats() -> (expenses: Double, income: Double, net: Double) {
+        let thisMonth = fetchThisMonth()
+        let expenses = thisMonth.filter { $0.type == .expense }.reduce(0) { $0 + $1.amount }
+        let income = thisMonth.filter { $0.type == .income }.reduce(0) { $0 + $1.amount }
         return (expenses, income, income - expenses)
     }
 }

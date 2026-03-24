@@ -88,6 +88,9 @@ enum ErrorStateType {
     case storageFull
     case notificationDenied
     case emptyConversation
+    case monthlyReportFailed
+    case budgetLimitNotSet
+    case parseFailureForValidExpense
 
     var title: String {
         switch self {
@@ -95,19 +98,28 @@ enum ErrorStateType {
         case .storageFull: return "Storage full"
         case .notificationDenied: return "Notifications off"
         case .emptyConversation: return "Nothing here yet"
+        case .monthlyReportFailed: return "Report unavailable"
+        case .budgetLimitNotSet: return "No budget set"
+        case .parseFailureForValidExpense: return "Couldn't read that"
         }
     }
 
     var message: String {
         switch self {
         case .couldntParse:
-            return "I didn't catch the amount. Try formats like \"£12.50 lunch\" or \"£40 groceries\"."
+            return "I didn't catch the amount. Try formats like \"£12.50 lunch\" or \"$40 groceries\"."
         case .storageFull:
             return "You've hit the free limit of 20 expenses. Upgrade to Track for unlimited tracking."
         case .notificationDenied:
             return "Enable notifications in Settings to get your weekly summary every Friday."
         case .emptyConversation:
             return "Send your first expense to get started. Try something like \"£12.50 lunch\"."
+        case .monthlyReportFailed:
+            return "Couldn't generate the monthly report. Make sure you have expenses logged for that month."
+        case .budgetLimitNotSet:
+            return "No budget limit set. Say \"set budget to £500\" or \"budget of $1000\" to get started."
+        case .parseFailureForValidExpense:
+            return "I had trouble reading that expense. Try a simpler format like \"£15 lunch\" or \"$25 groceries\"."
         }
     }
 
@@ -117,6 +129,9 @@ enum ErrorStateType {
         case .storageFull: return "internaldrive.fill"
         case .notificationDenied: return "bell.slash.fill"
         case .emptyConversation: return "bubble.left.and.bubble.right.fill"
+        case .monthlyReportFailed: return "chart.bar.xaxis"
+        case .budgetLimitNotSet: return "target"
+        case .parseFailureForValidExpense: return "text.badge.xmark"
         }
     }
 
@@ -126,6 +141,9 @@ enum ErrorStateType {
         case .storageFull: return Color(hex: "ff453a")
         case .notificationDenied: return Color(hex: "8a8a8a")
         case .emptyConversation: return Color(hex: "34c759")
+        case .monthlyReportFailed: return Color(hex: "ff9f0a")
+        case .budgetLimitNotSet: return Color(hex: "5ac8fa")
+        case .parseFailureForValidExpense: return Color(hex: "ff9f0a")
         }
     }
 }

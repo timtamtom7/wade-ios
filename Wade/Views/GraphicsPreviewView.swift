@@ -19,6 +19,8 @@ struct GraphicsPreviewView: View {
                         tabButton("Icons", tag: 1)
                         tabButton("Summary", tag: 2)
                         tabButton("Messages", tag: 3)
+                        tabButton("Reports", tag: 4)
+                        tabButton("Budget", tag: 5)
                     }
                     .padding(.horizontal, 16)
                 }
@@ -37,6 +39,12 @@ struct GraphicsPreviewView: View {
 
                     TextMessageUIMockupView()
                         .tag(3)
+
+                    MonthlyReportPreviewView()
+                        .tag(4)
+
+                    BudgetProgressPreviewView()
+                        .tag(5)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
             }
@@ -168,4 +176,459 @@ struct AppStoreCopy {
         "personal finance",
         "money management"
     ]
+}
+
+// MARK: - R2: Monthly Report Preview
+
+struct MonthlyReportPreviewView: View {
+    private let backgroundColor = Color(hex: "0d0d0e")
+    private let cardColor = Color(hex: "1c1c1e")
+    private let textColor = Color(hex: "f5f5f7")
+    private let secondaryColor = Color(hex: "8a8a8a")
+    private let expenseRed = Color(hex: "ff453a")
+    private let incomeGreen = Color(hex: "34c759")
+    private let accentYellow = Color(hex: "ffd60a")
+
+    private let sampleReport = MonthlyReport(
+        id: UUID(),
+        year: 2026,
+        month: 3,
+        totalSpent: 1274.50,
+        totalIncome: 4200.00,
+        net: 2925.50,
+        categoryBreakdown: [
+            MonthlyReport.CategorySpending(category: "Food", amount: 420.30, percentage: 33, icon: "fork.knife"),
+            MonthlyReport.CategorySpending(category: "Transport", amount: 310.00, percentage: 24, icon: "car.fill"),
+            MonthlyReport.CategorySpending(category: "Groceries", amount: 240.00, percentage: 19, icon: "cart.fill"),
+            MonthlyReport.CategorySpending(category: "Shopping", amount: 180.20, percentage: 14, icon: "bag.fill"),
+            MonthlyReport.CategorySpending(category: "Entertainment", amount: 124.00, percentage: 10, icon: "gamecontroller.fill")
+        ],
+        topCategory: "Food",
+        vsLastMonthPercent: -8.5,
+        vsLastMonthAmount: -118.20,
+        recurringTotal: 89.99,
+        currencyCode: "USD"
+    )
+
+    var body: some View {
+        ZStack {
+            backgroundColor.ignoresSafeArea()
+
+            ScrollView {
+                VStack(spacing: 32) {
+                    Text("Monthly Report Card")
+                        .font(.system(size: 22, weight: .bold))
+                        .foregroundColor(textColor)
+                        .padding(.top, 20)
+
+                    // Full monthly report card
+                    previewSection(title: "Monthly Report Card (In-chat)") {
+                        WadeResponseCard(
+                            message: Message.monthlyReportMessage(sampleReport)
+                        )
+                        .padding(.horizontal, 16)
+                    }
+
+                    // Category pie chart
+                    previewSection(title: "Category Pie Chart") {
+                        VStack(spacing: 16) {
+                            Text("March 2026 Spending")
+                                .font(.system(size: 15, weight: .semibold))
+                                .foregroundColor(textColor)
+
+                            PieChartView(categories: sampleReport.categoryBreakdown)
+                                .frame(width: 180, height: 180)
+
+                            // Legend
+                            VStack(spacing: 6) {
+                                ForEach(sampleReport.categoryBreakdown.prefix(5)) { cat in
+                                    HStack {
+                                        Circle()
+                                            .fill(colorForCategory(cat.category))
+                                            .frame(width: 10, height: 10)
+                                        Text(cat.category)
+                                            .font(.system(size: 13))
+                                            .foregroundColor(textColor)
+                                        Spacer()
+                                        Text("\(Int(cat.percentage))%")
+                                            .font(.system(size: 13, design: .monospaced))
+                                            .foregroundColor(secondaryColor)
+                                        Text(formatCurrency(cat.amount))
+                                            .font(.system(size: 13, design: .monospaced))
+                                            .foregroundColor(secondaryColor)
+                                    }
+                                }
+                            }
+                        }
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(cardColor)
+                        )
+                        .padding(.horizontal, 16)
+                    }
+
+                    // vs last month comparison
+                    previewSection(title: "Month-over-Month") {
+                        VStack(spacing: 12) {
+                            HStack {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("March 2026")
+                                        .font(.system(size: 13, weight: .semibold))
+                                        .foregroundColor(textColor)
+                                    Text(formatCurrency(sampleReport.totalSpent))
+                                        .font(.system(size: 20, weight: .bold, design: .monospaced))
+                                        .foregroundColor(expenseRed)
+                                }
+
+                                Spacer()
+
+                                VStack(alignment: .trailing, spacing: 4) {
+                                    Text("vs Feb")
+                                        .font(.system(size: 11))
+                                        .foregroundColor(secondaryColor)
+                                    HStack(spacing: 2) {
+                                        Text("▼")
+                                            .font(.system(size: 12))
+                                        Text("8.5%")
+                                            .font(.system(size: 14, weight: .semibold))
+                                    }
+                                    .foregroundColor(incomeGreen)
+                                    Text("~$118 less")
+                                        .font(.system(size: 11))
+                                        .foregroundColor(secondaryColor)
+                                }
+                            }
+
+                            // Bar comparison
+                            HStack(spacing: 8) {
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Feb")
+                                        .font(.system(size: 10))
+                                        .foregroundColor(secondaryColor)
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .fill(expenseRed.opacity(0.6))
+                                        .frame(width: 120, height: 16)
+                                }
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Mar")
+                                        .font(.system(size: 10))
+                                        .foregroundColor(secondaryColor)
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .fill(expenseRed)
+                                        .frame(width: 110, height: 16)
+                                }
+                            }
+                        }
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(cardColor)
+                        )
+                        .padding(.horizontal, 16)
+                    }
+
+                    Spacer(minLength: 40)
+                }
+            }
+        }
+        .preferredColorScheme(.dark)
+    }
+
+    private func previewSection<Content: View>(title: String, @ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title)
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundColor(secondaryColor)
+                .padding(.horizontal, 16)
+
+            content()
+                .padding(.vertical, 12)
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(Color(hex: "111112"))
+                )
+                .padding(.horizontal, 16)
+        }
+    }
+
+    private func formatCurrency(_ amount: Double) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = "USD"
+        return formatter.string(from: NSNumber(value: amount)) ?? "$\(String(format: "%.2f", amount))"
+    }
+
+    private func colorForCategory(_ category: String) -> Color {
+        let colors: [String: Color] = [
+            "Food": Color(hex: "ff453a"),
+            "Groceries": Color(hex: "30d158"),
+            "Transport": Color(hex: "0a84ff"),
+            "Shopping": Color(hex: "ff9f0a"),
+            "Entertainment": Color(hex: "bf5af2"),
+            "Health": Color(hex: "64d2ff"),
+            "Bills": Color(hex: "ffd60a"),
+            "Travel": Color(hex: "ff375f"),
+            "Education": Color(hex: "ac8e68"),
+            "Other": Color(hex: "8e8e93")
+        ]
+        return colors[category] ?? Color(hex: "8e8e93")
+    }
+}
+
+// MARK: - Pie Chart View
+
+struct PieChartView: View {
+    let categories: [MonthlyReport.CategorySpending]
+
+    private let foodColor = Color(hex: "ff453a")
+    private let transportColor = Color(hex: "0a84ff")
+    private let groceriesColor = Color(hex: "30d158")
+    private let shoppingColor = Color(hex: "ff9f0a")
+    private let entertainmentColor = Color(hex: "bf5af2")
+
+    var body: some View {
+        GeometryReader { geo in
+            let radius = min(geo.size.width, geo.size.height) / 2
+            let center = CGPoint(x: geo.size.width / 2, y: geo.size.height / 2)
+
+            ZStack {
+                ForEach(Array(sliceData.enumerated()), id: \.offset) { index, slice in
+                    PieSlice(
+                        startAngle: slice.startAngle,
+                        endAngle: slice.endAngle
+                    )
+                    .fill(colorForIndex(index))
+                }
+
+                // Donut hole
+                Circle()
+                    .fill(Color(hex: "1c1c1e"))
+                    .frame(width: radius, height: radius)
+
+                // Center label
+                VStack(spacing: 2) {
+                    Text("Total")
+                        .font(.system(size: 10))
+                        .foregroundColor(Color(hex: "8a8a8a"))
+                    Text("\(categories.count)")
+                        .font(.system(size: 18, weight: .bold))
+                        .foregroundColor(Color(hex: "f5f5f7"))
+                    Text("categories")
+                        .font(.system(size: 10))
+                        .foregroundColor(Color(hex: "8a8a8a"))
+                }
+            }
+        }
+    }
+
+    private var sliceData: [(startAngle: Angle, endAngle: Angle)] {
+        var slices: [(startAngle: Angle, endAngle: Angle)] = []
+        var currentAngle: Double = -90
+
+        for cat in categories {
+            let degrees = cat.percentage / 100 * 360
+            let startAngle = Angle(degrees: currentAngle)
+            let endAngle = Angle(degrees: currentAngle + degrees)
+            slices.append((startAngle, endAngle))
+            currentAngle += degrees
+        }
+
+        return slices
+    }
+
+    private func colorForIndex(_ index: Int) -> Color {
+        let palette: [Color] = [
+            Color(hex: "ff453a"),
+            Color(hex: "0a84ff"),
+            Color(hex: "30d158"),
+            Color(hex: "ff9f0a"),
+            Color(hex: "bf5af2"),
+            Color(hex: "64d2ff"),
+            Color(hex: "ffd60a"),
+            Color(hex: "ff375f")
+        ]
+        return palette[index % palette.count]
+    }
+}
+
+struct PieSlice: Shape {
+    let startAngle: Angle
+    let endAngle: Angle
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        let center = CGPoint(x: rect.midX, y: rect.midY)
+        let radius = min(rect.width, rect.height) / 2
+
+        path.move(to: center)
+        path.addArc(center: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: false)
+        path.closeSubpath()
+
+        return path
+    }
+}
+
+// MARK: - R2: Budget Progress Preview
+
+struct BudgetProgressPreviewView: View {
+    private let backgroundColor = Color(hex: "0d0d0e")
+    private let cardColor = Color(hex: "1c1c1e")
+    private let textColor = Color(hex: "f5f5f7")
+    private let secondaryColor = Color(hex: "8a8a8a")
+    private let incomeGreen = Color(hex: "34c759")
+    private let warningOrange = Color(hex: "ff9f0a")
+    private let expenseRed = Color(hex: "ff453a")
+
+    var body: some View {
+        ZStack {
+            backgroundColor.ignoresSafeArea()
+
+            ScrollView {
+                VStack(spacing: 32) {
+                    Text("Budget Progress UI")
+                        .font(.system(size: 22, weight: .bold))
+                        .foregroundColor(textColor)
+                        .padding(.top, 20)
+
+                    // 80% budget alert
+                    previewSection(title: "80% Budget Alert") {
+                        WadeResponseCard(
+                            message: Message.budgetAlertMessage(
+                                BudgetAlert(type: .at80, spent: 1600, limit: 2000, percentage: 80)
+                            )
+                        )
+                        .padding(.horizontal, 16)
+                    }
+
+                    // 100% budget alert
+                    previewSection(title: "100% Budget Reached") {
+                        WadeResponseCard(
+                            message: Message.budgetAlertMessage(
+                                BudgetAlert(type: .at100, spent: 2000, limit: 2000, percentage: 100)
+                            )
+                        )
+                        .padding(.horizontal, 16)
+                    }
+
+                    // Over budget
+                    previewSection(title: "Over Budget") {
+                        WadeResponseCard(
+                            message: Message.budgetAlertMessage(
+                                BudgetAlert(type: .overBudget, spent: 2340, limit: 2000, percentage: 117)
+                            )
+                        )
+                        .padding(.horizontal, 16)
+                    }
+
+                    // Budget progress bar component
+                    previewSection(title: "Budget Progress Bar") {
+                        VStack(spacing: 16) {
+                            budgetRow(label: "80%", spent: 1600, limit: 2000, percentage: 0.8, color: warningOrange)
+                            budgetRow(label: "100%", spent: 2000, limit: 2000, percentage: 1.0, color: expenseRed)
+                            budgetRow(label: "Over", spent: 2400, limit: 2000, percentage: 1.2, color: expenseRed)
+                        }
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(cardColor)
+                        )
+                        .padding(.horizontal, 16)
+                    }
+
+                    // Set budget card
+                    previewSection(title: "Set Budget Prompt") {
+                        VStack(alignment: .leading, spacing: 10) {
+                            HStack(spacing: 6) {
+                                Image(systemName: "target")
+                                    .font(.system(size: 18))
+                                    .foregroundColor(Color(hex: "5ac8fa"))
+                                Text("Set a monthly budget")
+                                    .font(.system(size: 15, weight: .semibold))
+                                    .foregroundColor(textColor)
+                            }
+
+                            Text("Say things like \"budget of £500\" or \"set limit to $2000\"")
+                                .font(.system(size: 13))
+                                .foregroundColor(secondaryColor)
+
+                            // Example
+                            HStack {
+                                Text("\"budget of £2000\"")
+                                    .font(.system(size: 12, design: .monospaced))
+                                    .foregroundColor(incomeGreen)
+                                    .padding(.horizontal, 10)
+                                    .padding(.vertical, 5)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 6)
+                                            .fill(incomeGreen.opacity(0.15))
+                                    )
+                                Spacer()
+                            }
+                        }
+                        .padding(16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(cardColor)
+                        )
+                        .padding(.horizontal, 16)
+                    }
+
+                    Spacer(minLength: 40)
+                }
+            }
+        }
+        .preferredColorScheme(.dark)
+    }
+
+    private func previewSection<Content: View>(title: String, @ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title)
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundColor(secondaryColor)
+                .padding(.horizontal, 16)
+
+            content()
+                .padding(.vertical, 12)
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(Color(hex: "111112"))
+                )
+                .padding(.horizontal, 16)
+        }
+    }
+
+    private func budgetRow(label: String, spent: Double, limit: Double, percentage: Double, color: Color) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Text(label)
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(color)
+                Spacer()
+                Text("\(formatCurrency(spent)) / \(formatCurrency(limit))")
+                    .font(.system(size: 12, design: .monospaced))
+                    .foregroundColor(secondaryColor)
+            }
+
+            GeometryReader { geo in
+                ZStack(alignment: .leading) {
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color(hex: "2a2a2e"))
+                        .frame(height: 8)
+
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(color)
+                        .frame(width: geo.size.width * CGFloat(min(percentage, 1.0)), height: 8)
+                }
+            }
+            .frame(height: 8)
+        }
+    }
+
+    private func formatCurrency(_ amount: Double) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = "USD"
+        return formatter.string(from: NSNumber(value: amount)) ?? "$\(String(format: "%.2f", amount))"
+    }
 }
