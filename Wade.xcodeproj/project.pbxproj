@@ -1,0 +1,450 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0051BD7704874D0096FBFA5E /* WadeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033E77ED5915DBC8F7B8285B /* WadeApp.swift */; };
+		220BBABDD60FEBCF14CCB26F /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEE3548E8DB52FC3063DAAB /* ConversationView.swift */; };
+		272D8E918B08E44FF7FD16EC /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD903218DB7A3A631C58299 /* Message.swift */; };
+		34068D4A2EBB51BC859DFAE3 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7626BEC16192DD5A5A6136BA /* NotificationService.swift */; };
+		346498BD7713705C56DF7316 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 15D1F464FEB194C1AB137B54 /* SQLite */; };
+		3A01962C128482399988999D /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05969B6AC7AAC823329D1DF8 /* DatabaseService.swift */; };
+		4F6B0F5E8CA7884A2C487CE4 /* ExpenseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA6928A2E5F311739B0E844 /* ExpenseParser.swift */; };
+		5972E970DFE597C2278698BC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ECB2ABEF494E96A951F682 /* SettingsView.swift */; };
+		6E0157D3D25D465A7518EA6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 070A86410E1E6FAD9F9AAA57 /* Assets.xcassets */; };
+		745634AAE5DC57B859861D07 /* ConversationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541EAF1E5094E0D256DEE79A /* ConversationService.swift */; };
+		845292D647F28D9C969197BC /* PricingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9371DFC75BBB9E5B2453D78D /* PricingView.swift */; };
+		856F7BA2FACC4907360D6108 /* WadeResponseCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C362C202F0264608B7A7ED /* WadeResponseCard.swift */; };
+		8597C79A160D796A71736DA5 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9F4431F11F1B52C46D9391 /* Transaction.swift */; };
+		AE3BA3BDD66F1BDE8F825DDC /* GraphicsPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FDAE72368B24D61B5FEA0B /* GraphicsPreviewView.swift */; };
+		B89B691D4A11758093A712F8 /* MessageBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F35A797F5EC75109736091 /* MessageBubbleView.swift */; };
+		C32AECCADDAC08167A8DC651 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4AFD8214CADBE45898F0CD /* OnboardingView.swift */; };
+		EBFAB5A263D79F25C0BBD136 /* ErrorStateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABB488382B2D624156976DB /* ErrorStateViews.swift */; };
+		EFAF4C033AE68B7AA4F3F0FD /* SubscriptionTier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A71CA154FB478ECD2DF106 /* SubscriptionTier.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		033E77ED5915DBC8F7B8285B /* WadeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WadeApp.swift; sourceTree = "<group>"; };
+		05969B6AC7AAC823329D1DF8 /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
+		070A86410E1E6FAD9F9AAA57 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		17A71CA154FB478ECD2DF106 /* SubscriptionTier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTier.swift; sourceTree = "<group>"; };
+		1BD903218DB7A3A631C58299 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		1EEE3548E8DB52FC3063DAAB /* ConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationView.swift; sourceTree = "<group>"; };
+		1FA6928A2E5F311739B0E844 /* ExpenseParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseParser.swift; sourceTree = "<group>"; };
+		43C2366BB701A9DFBD5EA0BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		48F35A797F5EC75109736091 /* MessageBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubbleView.swift; sourceTree = "<group>"; };
+		541EAF1E5094E0D256DEE79A /* ConversationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationService.swift; sourceTree = "<group>"; };
+		62FDAE72368B24D61B5FEA0B /* GraphicsPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphicsPreviewView.swift; sourceTree = "<group>"; };
+		7626BEC16192DD5A5A6136BA /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		7ABB488382B2D624156976DB /* ErrorStateViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorStateViews.swift; sourceTree = "<group>"; };
+		7B4AFD8214CADBE45898F0CD /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		8EA29AEF29332CE925D472E9 /* Wade.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Wade.entitlements; sourceTree = "<group>"; };
+		9371DFC75BBB9E5B2453D78D /* PricingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingView.swift; sourceTree = "<group>"; };
+		A6ECB2ABEF494E96A951F682 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		AC877A613C96473E5611767C /* Wade.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Wade.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD9F4431F11F1B52C46D9391 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		E6C362C202F0264608B7A7ED /* WadeResponseCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WadeResponseCard.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0D8A9FC5E67189F6A9A648F8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				346498BD7713705C56DF7316 /* SQLite in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		17280A70774801BC49967D24 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				541EAF1E5094E0D256DEE79A /* ConversationService.swift */,
+				05969B6AC7AAC823329D1DF8 /* DatabaseService.swift */,
+				1FA6928A2E5F311739B0E844 /* ExpenseParser.swift */,
+				7626BEC16192DD5A5A6136BA /* NotificationService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		354607D3E88D9E8E522DB092 /* Wade */ = {
+			isa = PBXGroup;
+			children = (
+				B782844C89BB885E1B12C64E /* App */,
+				C2FF799015DEB05E4FDB1EB8 /* Models */,
+				4A64A61ECA11082AB2BB6D3E /* Resources */,
+				17280A70774801BC49967D24 /* Services */,
+				AF0F6363958C2E479391DB81 /* Views */,
+			);
+			path = Wade;
+			sourceTree = "<group>";
+		};
+		4A64A61ECA11082AB2BB6D3E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				070A86410E1E6FAD9F9AAA57 /* Assets.xcassets */,
+				43C2366BB701A9DFBD5EA0BE /* Info.plist */,
+				8EA29AEF29332CE925D472E9 /* Wade.entitlements */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		5AC9C1B5D4646C53985EFEFD = {
+			isa = PBXGroup;
+			children = (
+				354607D3E88D9E8E522DB092 /* Wade */,
+				F72A99607A88622A8B6ABD02 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AF0F6363958C2E479391DB81 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1EEE3548E8DB52FC3063DAAB /* ConversationView.swift */,
+				7ABB488382B2D624156976DB /* ErrorStateViews.swift */,
+				62FDAE72368B24D61B5FEA0B /* GraphicsPreviewView.swift */,
+				48F35A797F5EC75109736091 /* MessageBubbleView.swift */,
+				7B4AFD8214CADBE45898F0CD /* OnboardingView.swift */,
+				9371DFC75BBB9E5B2453D78D /* PricingView.swift */,
+				A6ECB2ABEF494E96A951F682 /* SettingsView.swift */,
+				E6C362C202F0264608B7A7ED /* WadeResponseCard.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B782844C89BB885E1B12C64E /* App */ = {
+			isa = PBXGroup;
+			children = (
+				033E77ED5915DBC8F7B8285B /* WadeApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		C2FF799015DEB05E4FDB1EB8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1BD903218DB7A3A631C58299 /* Message.swift */,
+				17A71CA154FB478ECD2DF106 /* SubscriptionTier.swift */,
+				DD9F4431F11F1B52C46D9391 /* Transaction.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F72A99607A88622A8B6ABD02 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AC877A613C96473E5611767C /* Wade.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FC6CC11961F8EA6115CA1AAE /* Wade */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED50376C500BCFB63348CEF5 /* Build configuration list for PBXNativeTarget "Wade" */;
+			buildPhases = (
+				EEAA553E61666B38C98E7C8B /* Sources */,
+				704E8EB539980C7F6ED8960E /* Resources */,
+				0D8A9FC5E67189F6A9A648F8 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Wade;
+			packageProductDependencies = (
+				15D1F464FEB194C1AB137B54 /* SQLite */,
+			);
+			productName = Wade;
+			productReference = AC877A613C96473E5611767C /* Wade.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3A02D0C60B316930F38735F5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					FC6CC11961F8EA6115CA1AAE = {
+						DevelopmentTeam = "";
+					};
+				};
+			};
+			buildConfigurationList = FC7C122B028C3AA3360408E3 /* Build configuration list for PBXProject "Wade" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 5AC9C1B5D4646C53985EFEFD;
+			packageReferences = (
+				ADB7F56686B321E53EA53351 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+			);
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FC6CC11961F8EA6115CA1AAE /* Wade */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		704E8EB539980C7F6ED8960E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6E0157D3D25D465A7518EA6F /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EEAA553E61666B38C98E7C8B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				745634AAE5DC57B859861D07 /* ConversationService.swift in Sources */,
+				220BBABDD60FEBCF14CCB26F /* ConversationView.swift in Sources */,
+				3A01962C128482399988999D /* DatabaseService.swift in Sources */,
+				EBFAB5A263D79F25C0BBD136 /* ErrorStateViews.swift in Sources */,
+				4F6B0F5E8CA7884A2C487CE4 /* ExpenseParser.swift in Sources */,
+				AE3BA3BDD66F1BDE8F825DDC /* GraphicsPreviewView.swift in Sources */,
+				272D8E918B08E44FF7FD16EC /* Message.swift in Sources */,
+				B89B691D4A11758093A712F8 /* MessageBubbleView.swift in Sources */,
+				34068D4A2EBB51BC859DFAE3 /* NotificationService.swift in Sources */,
+				C32AECCADDAC08167A8DC651 /* OnboardingView.swift in Sources */,
+				845292D647F28D9C969197BC /* PricingView.swift in Sources */,
+				5972E970DFE597C2278698BC /* SettingsView.swift in Sources */,
+				EFAF4C033AE68B7AA4F3F0FD /* SubscriptionTier.swift in Sources */,
+				8597C79A160D796A71736DA5 /* Transaction.swift in Sources */,
+				0051BD7704874D0096FBFA5E /* WadeApp.swift in Sources */,
+				856F7BA2FACC4907360D6108 /* WadeResponseCard.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		8A9938619823356094307D48 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		B68856DC22E03BF30684B38B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_ENTITLEMENTS = Wade/Resources/Wade.entitlements;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Wade/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wade.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		EEABAC32FBF55B672FCF590D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		FBCFA5EBFBB8BE84EF3E3CA3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_ENTITLEMENTS = Wade/Resources/Wade.entitlements;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = Wade/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wade.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ED50376C500BCFB63348CEF5 /* Build configuration list for PBXNativeTarget "Wade" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FBCFA5EBFBB8BE84EF3E3CA3 /* Debug */,
+				B68856DC22E03BF30684B38B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FC7C122B028C3AA3360408E3 /* Build configuration list for PBXProject "Wade" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EEABAC32FBF55B672FCF590D /* Debug */,
+				8A9938619823356094307D48 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		ADB7F56686B321E53EA53351 /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
+			requirement = {
+				kind = exactVersion;
+				version = 0.15.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		15D1F464FEB194C1AB137B54 /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ADB7F56686B321E53EA53351 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 3A02D0C60B316930F38735F5 /* Project object */;
+}
