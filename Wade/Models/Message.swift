@@ -91,6 +91,7 @@ enum MessageType: String {
     case monthlyReport
     case budgetAlert
     case recurringDetection
+    case recurringBillsList
     case parseFailure
     case error
 }
@@ -108,6 +109,7 @@ struct Message: Identifiable {
     let budgetProgress: BudgetProgress?
     let budgetAlert: BudgetAlert?
     let recurringDetection: RecurringDetection?
+    let recurringBills: [RecurringExpense]?
     let messageType: MessageType
 
     init(
@@ -123,6 +125,7 @@ struct Message: Identifiable {
         budgetProgress: BudgetProgress? = nil,
         budgetAlert: BudgetAlert? = nil,
         recurringDetection: RecurringDetection? = nil,
+        recurringBills: [RecurringExpense]? = nil,
         messageType: MessageType = .text
     ) {
         self.id = id
@@ -137,6 +140,7 @@ struct Message: Identifiable {
         self.budgetProgress = budgetProgress
         self.budgetAlert = budgetAlert
         self.recurringDetection = recurringDetection
+        self.recurringBills = recurringBills
         self.messageType = messageType
     }
 
@@ -195,6 +199,22 @@ struct Message: Identifiable {
             recurringDetection: detection,
             messageType: .recurringDetection
         )
+    }
+
+    static func recurringBillsListMessage(_ bills: [RecurringExpense]) -> Message {
+        Message(
+            role: .wade,
+            text: recurringBillsListText(bills),
+            recurringBills: bills,
+            messageType: .recurringBillsList
+        )
+    }
+
+    private static func recurringBillsListText(_ bills: [RecurringExpense]) -> String {
+        if bills.isEmpty {
+            return "No upcoming bills in the next 7 days."
+        }
+        return "📅 \(bills.count) upcoming bill\(bills.count == 1 ? "" : "s") this week"
     }
 
     // MARK: - Private Helpers

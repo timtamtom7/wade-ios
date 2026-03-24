@@ -30,6 +30,8 @@ struct SettingsView: View {
 
                         preferencesSection
 
+                        currencySection
+
                         budgetSection
 
                         notificationSection
@@ -162,6 +164,84 @@ struct SettingsView: View {
                     showToggle: true,
                     isOn: $notificationsEnabled
                 )
+            }
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(cardColor)
+            )
+        }
+    }
+
+    // MARK: - Currency Section
+    private var currencySection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Currency")
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundColor(secondaryColor)
+
+            VStack(spacing: 0) {
+                Menu {
+                    ForEach(CurrencyService.supportedCurrencies, id: \.code) { currency in
+                        Button {
+                            CurrencyService.shared.primaryCurrencyCode = currency.code
+                        } label: {
+                            HStack {
+                                Text("\(currency.symbol) \(currency.code)")
+                                if currency.code == CurrencyService.shared.primaryCurrencyCode {
+                                    Image(systemName: "checkmark")
+                                }
+                            }
+                        }
+                    }
+                } label: {
+                    HStack {
+                        Image(systemName: "sterlingsign.circle.fill")
+                            .foregroundColor(accentGreen)
+                            .font(.system(size: 20))
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Display Currency")
+                                .font(.system(size: 16))
+                                .foregroundColor(textColor)
+
+                            Text("All amounts shown in this currency")
+                                .font(.system(size: 12))
+                                .foregroundColor(secondaryColor)
+                        }
+
+                        Spacer()
+
+                        HStack(spacing: 4) {
+                            Text(CurrencyService.shared.primaryCurrencySymbol)
+                                .font(.system(size: 16, design: .monospaced))
+                                .foregroundColor(textColor)
+                            Text(CurrencyService.shared.primaryCurrencyCode)
+                                .font(.system(size: 12))
+                                .foregroundColor(secondaryColor)
+                            Image(systemName: "chevron.up.chevron.down")
+                                .font(.system(size: 10))
+                                .foregroundColor(secondaryColor)
+                        }
+                    }
+                    .padding(16)
+                }
+                .buttonStyle(.plain)
+
+                // Note about multi-currency tracking
+                Divider()
+                    .background(Color(hex: "2a2a2e"))
+
+                HStack(spacing: 8) {
+                    Image(systemName: "info.circle.fill")
+                        .font(.system(size: 12))
+                        .foregroundColor(Color(hex: "5ac8fa"))
+
+                    Text("Track in any currency — £, $, €, ¥ all supported. Amounts convert to your display currency for totals.")
+                        .font(.system(size: 12))
+                        .foregroundColor(secondaryColor)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(12)
             }
             .background(
                 RoundedRectangle(cornerRadius: 12)

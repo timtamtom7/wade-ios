@@ -9,6 +9,8 @@ struct ConversationView: View {
     @State private var showParseError: Bool = false
     @State private var showStorageFull: Bool = false
     @State private var parseErrorMessage: String = ""
+    @State private var currentErrorType: ErrorStateType = .couldntParse
+    @State private var showErrorState: Bool = false
     @FocusState private var isInputFocused: Bool
 
     private let conversationService = ConversationService.shared
@@ -100,6 +102,11 @@ struct ConversationView: View {
             .sheet(isPresented: $showPricing) {
                 PricingView()
             }
+            .sheet(isPresented: $showErrorState) {
+                ErrorStateView(type: currentErrorType) {
+                    // Retry action based on error type
+                }
+            }
             .alert("Couldn't parse that", isPresented: $showParseError) {
                 Button("OK", role: .cancel) { }
                 Button("Try again") {
@@ -170,10 +177,15 @@ struct ConversationView: View {
             isLoading = false
             let response = conversationService.processUserInput(text)
 
-            // Check for parse failure
-            if response.text.contains("didn't catch") || response.text.contains("didn't understand") || response.text.contains("Oops") {
+            // Check for parse failure - show as card (already handled by WadeResponseCard)
+            if response.messageType == .parseFailure {
                 parseErrorMessage = response.text
-                // Don't show alert, just show Wade's response card which handles it
+            }
+
+            // Check for monthly report failure
+            if response.text.contains("Couldn't generate") || response.text.contains("No data for that month") {
+                currentErrorType = .monthlyReportFailed
+                // Show as Wade card instead of full error state
             }
 
             // Check if storage is full

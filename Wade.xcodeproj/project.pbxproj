@@ -25,6 +25,7 @@
 		B89B691D4A11758093A712F8 /* MessageBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F35A797F5EC75109736091 /* MessageBubbleView.swift */; };
 		C32AECCADDAC08167A8DC651 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4AFD8214CADBE45898F0CD /* OnboardingView.swift */; };
 		C8DD79C9A8C58F6ACCBAB717 /* BudgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB64CE3184F687CFE515A522 /* BudgetService.swift */; };
+		C1A2B3D4E5F6789012345678 /* CurrencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6789012345678 /* CurrencyService.swift */; };
 		DC59DB2D43A9E84D404DD231 /* MonthlyReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9285BFC14C8ACEEC5828DC82 /* MonthlyReportService.swift */; };
 		EBFAB5A263D79F25C0BBD136 /* ErrorStateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABB488382B2D624156976DB /* ErrorStateViews.swift */; };
 		EFAF4C033AE68B7AA4F3F0FD /* SubscriptionTier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A71CA154FB478ECD2DF106 /* SubscriptionTier.swift */; };
@@ -52,6 +53,7 @@
 		A6ECB2ABEF494E96A951F682 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		AC877A613C96473E5611767C /* Wade.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Wade.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB64CE3184F687CFE515A522 /* BudgetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetService.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6789012345678 /* CurrencyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyService.swift; sourceTree = "<group>"; };
 		DD9F4431F11F1B52C46D9391 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		E6C362C202F0264608B7A7ED /* WadeResponseCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WadeResponseCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,6 +75,7 @@
 			children = (
 				CB64CE3184F687CFE515A522 /* BudgetService.swift */,
 				541EAF1E5094E0D256DEE79A /* ConversationService.swift */,
+				A1B2C3D4E5F6789012345678 /* CurrencyService.swift */,
 				05969B6AC7AAC823329D1DF8 /* DatabaseService.swift */,
 				1FA6928A2E5F311739B0E844 /* ExpenseParser.swift */,
 				9285BFC14C8ACEEC5828DC82 /* MonthlyReportService.swift */,
@@ -228,6 +231,7 @@
 			files = (
 				C8DD79C9A8C58F6ACCBAB717 /* BudgetService.swift in Sources */,
 				745634AAE5DC57B859861D07 /* ConversationService.swift in Sources */,
+				C1A2B3D4E5F6789012345678 /* CurrencyService.swift in Sources */,
 				220BBABDD60FEBCF14CCB26F /* ConversationView.swift in Sources */,
 				3A01962C128482399988999D /* DatabaseService.swift in Sources */,
 				EBFAB5A263D79F25C0BBD136 /* ErrorStateViews.swift in Sources */,

@@ -14,6 +14,8 @@ final class DatabaseService {
     private let category = SQLite.Expression<String>("category")
     private let note = SQLite.Expression<String>("note")
     private let date = SQLite.Expression<Date>("date")
+    private let currencyCode = SQLite.Expression<String>("currency_code")
+    private let isRecurringCol = SQLite.Expression<Bool>("is_recurring")
 
     private init() {
         setupDatabase()
@@ -38,6 +40,8 @@ final class DatabaseService {
             t.column(category)
             t.column(note)
             t.column(date)
+            t.column(currencyCode)
+            t.column(isRecurringCol)
         })
     }
 
@@ -48,7 +52,9 @@ final class DatabaseService {
             type <- transaction.type.rawValue,
             category <- transaction.category,
             note <- transaction.note,
-            date <- transaction.date
+            date <- transaction.date,
+            currencyCode <- transaction.currencyCode,
+            isRecurringCol <- transaction.isRecurring
         )
         try db?.run(insert)
     }
@@ -66,7 +72,9 @@ final class DatabaseService {
                         type: txType,
                         category: row[category],
                         note: row[note],
-                        date: row[date]
+                        date: row[date],
+                        isRecurring: row[isRecurringCol],
+                        currencyCode: row[currencyCode]
                     ))
                 }
             }

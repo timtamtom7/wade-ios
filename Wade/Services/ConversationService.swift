@@ -10,6 +10,7 @@ final class ConversationService {
     private let budgetService = BudgetService.shared
     private let monthlyReportService = MonthlyReportService.shared
     private let recurringService = RecurringExpenseService.shared
+    private let currencyService = CurrencyService.shared
 
     private var lastBudgetAlert: BudgetAlert?
     private var lastBudgetAlertMonth: Int = -1
@@ -76,17 +77,7 @@ final class ConversationService {
         // Handle upcoming bills query
         if lowercased.contains("upcoming") && (lowercased.contains("bill") || lowercased.contains("recurring")) {
             let upcoming = recurringService.upcomingBills(withinDays: 7)
-            if upcoming.isEmpty {
-                return Message(
-                    role: .wade,
-                    text: "No recurring expenses due in the next 7 days."
-                )
-            }
-            let lines = upcoming.map { "• \($0.label): \(formatCurrency($0.estimatedAmount)) (due in \($0.daysUntilNext) days)" }
-            return Message(
-                role: .wade,
-                text: "📅 Upcoming bills:\n" + lines.joined(separator: "\n")
-            )
+            return Message.recurringBillsListMessage(upcoming)
         }
 
         // Parse expense
@@ -125,7 +116,7 @@ final class ConversationService {
         // Check for recurring pattern detection
         let recentTx = db.fetchThisMonth()
         let detections = recurringService.detectRecurringPatterns(from: recentTx)
-        var response = Message.wadeConfirmation(
+        let response = Message.wadeConfirmation(
             transaction: parsed.transaction,
             weeklyTotal: stats.expenses,
             weeklyIncome: stats.income,
@@ -210,9 +201,6 @@ final class ConversationService {
     }
 
     private func formatCurrency(_ amount: Double) -> String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencyCode = "USD"
-        return formatter.string(from: NSNumber(value: amount)) ?? "$\(String(format: "%.2f", amount))"
+        currencyService.formatCurrency(amount)
     }
 }

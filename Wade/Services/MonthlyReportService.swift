@@ -105,7 +105,7 @@ final class MonthlyReportService {
             "february": 2, "feb": 2,
             "march": 3, "mar": 3,
             "april": 4, "apr": 4,
-            "may": 5, "may": 5,
+            "may": 5,
             "june": 6, "jun": 6,
             "july": 7, "jul": 7,
             "august": 8, "aug": 8,

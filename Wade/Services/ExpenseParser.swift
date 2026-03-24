@@ -13,7 +13,8 @@ struct ParsedExpense {
             amount: amount,
             type: type,
             category: category,
-            note: rawText
+            note: rawText,
+            currencyCode: detectedCurrency
         )
     }
 }

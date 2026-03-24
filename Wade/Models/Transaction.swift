@@ -13,8 +13,9 @@ struct Transaction: Identifiable, Codable {
     let note: String
     let date: Date
     var isRecurring: Bool
+    let currencyCode: String
 
-    init(id: UUID = UUID(), amount: Double, type: TransactionType, category: String, note: String, date: Date = Date(), isRecurring: Bool = false) {
+    init(id: UUID = UUID(), amount: Double, type: TransactionType, category: String, note: String, date: Date = Date(), isRecurring: Bool = false, currencyCode: String = "USD") {
         self.id = id
         self.amount = amount
         self.type = type
@@ -22,6 +23,7 @@ struct Transaction: Identifiable, Codable {
         self.note = note
         self.date = date
         self.isRecurring = isRecurring
+        self.currencyCode = currencyCode
     }
 }
 

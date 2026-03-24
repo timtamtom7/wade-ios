@@ -36,6 +36,8 @@ struct WadeResponseCard: View {
                     budgetAlertContent
                 case .recurringDetection:
                     recurringDetectionContent
+                case .recurringBillsList:
+                    recurringBillsListContent
                 case .weeklySummary:
                     weeklySummaryContent
                 default:
@@ -128,14 +130,42 @@ struct WadeResponseCard: View {
                     }
                 }
 
-                // Category breakdown
+                // Category breakdown with pie chart
                 if !report.categoryBreakdown.isEmpty {
                     Divider()
                         .background(secondaryColor.opacity(0.3))
 
+                    // Compact pie chart + legend row
+                    HStack(spacing: 12) {
+                        // Pie chart
+                        MiniPieChart(categories: Array(report.categoryBreakdown.prefix(4)))
+                            .frame(width: 60, height: 60)
+
+                        // Legend
+                        VStack(alignment: .leading, spacing: 4) {
+                            ForEach(report.categoryBreakdown.prefix(4)) { cat in
+                                HStack(spacing: 4) {
+                                    Circle()
+                                        .fill(pieColorForCategory(cat.category))
+                                        .frame(width: 8, height: 8)
+                                    Text(cat.category)
+                                        .font(.system(size: 11))
+                                        .foregroundColor(textColor)
+                                        .lineLimit(1)
+                                    Spacer()
+                                    Text("\(Int(cat.percentage))%")
+                                        .font(.system(size: 10, design: .monospaced))
+                                        .foregroundColor(secondaryColor)
+                                }
+                            }
+                        }
+                    }
+
+                    // Full category list
                     Text("By category")
                         .font(.system(size: 12, weight: .semibold))
                         .foregroundColor(secondaryColor)
+                        .padding(.top, 4)
 
                     ForEach(report.categoryBreakdown.prefix(5)) { cat in
                         categoryRow(cat)
@@ -275,6 +305,95 @@ struct WadeResponseCard: View {
             }
         }
     }
+
+    // MARK: - Recurring Bills List Content
+
+    private var recurringBillsListContent: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 6) {
+                Text("📅")
+                    .font(.system(size: 16))
+                Text("Upcoming Bills")
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(textColor)
+            }
+
+            if let bills = message.recurringBills, !bills.isEmpty {
+                Divider()
+                    .background(secondaryColor.opacity(0.3))
+
+                ForEach(bills.prefix(5)) { bill in
+                    billRow(bill)
+                }
+
+                if bills.count > 5 {
+                    Text("+ \(bills.count - 5) more")
+                        .font(.system(size: 11))
+                        .foregroundColor(secondaryColor)
+                        .padding(.top, 2)
+                }
+            } else {
+                Text("No bills due in the next 7 days.")
+                    .font(.system(size: 13))
+                    .foregroundColor(secondaryColor)
+            }
+        }
+    }
+
+    private func billRow(_ bill: RecurringExpense) -> some View {
+        HStack(spacing: 8) {
+            // Due date indicator
+            ZStack {
+                Circle()
+                    .fill(dueColor(for: bill).opacity(0.2))
+                    .frame(width: 32, height: 32)
+
+                if bill.daysUntilNext == 0 {
+                    Text("Today")
+                        .font(.system(size: 8, weight: .bold))
+                        .foregroundColor(dueColor(for: bill))
+                } else if bill.daysUntilNext == 1 {
+                    Text("Tmrw")
+                        .font(.system(size: 8, weight: .bold))
+                        .foregroundColor(dueColor(for: bill))
+                } else {
+                    Text("\(bill.daysUntilNext)d")
+                        .font(.system(size: 9, weight: .bold))
+                        .foregroundColor(dueColor(for: bill))
+                }
+            }
+            .frame(width: 32)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(bill.label)
+                    .font(.system(size: 13, weight: .medium))
+                    .foregroundColor(textColor)
+                    .lineLimit(1)
+
+                Text(bill.frequencyDescription)
+                    .font(.system(size: 10))
+                    .foregroundColor(secondaryColor)
+            }
+
+            Spacer()
+
+            Text(CurrencyService.shared.formatCurrency(bill.estimatedAmount))
+                .font(.system(size: 13, design: .monospaced))
+                .foregroundColor(dueColor(for: bill))
+        }
+    }
+
+    private func dueColor(for bill: RecurringExpense) -> Color {
+        if bill.daysUntilNext == 0 {
+            return expenseColor
+        } else if bill.daysUntilNext <= 2 {
+            return warningColor
+        } else {
+            return incomeGreen
+        }
+    }
+
+    private var incomeGreen: Color { Color(hex: "34c759") }
 
     // MARK: - Weekly Summary Content
 
@@ -489,10 +608,7 @@ struct WadeResponseCard: View {
     }
 
     private func formatCurrency(_ amount: Double) -> String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.currencyCode = "USD"
-        return formatter.string(from: NSNumber(value: amount)) ?? "$\(String(format: "%.2f", amount))"
+        CurrencyService.shared.formatCurrency(amount)
     }
 
     private func iconForCategory(_ category: String) -> String {
@@ -510,5 +626,93 @@ struct WadeResponseCard: View {
             "Other": "circle.fill"
         ]
         return icons[category] ?? "circle.fill"
+    }
+
+    private func pieColorForCategory(_ category: String) -> Color {
+        let colors: [String: Color] = [
+            "Food": Color(hex: "ff453a"),
+            "Groceries": Color(hex: "30d158"),
+            "Transport": Color(hex: "0a84ff"),
+            "Shopping": Color(hex: "ff9f0a"),
+            "Entertainment": Color(hex: "bf5af2"),
+            "Health": Color(hex: "64d2ff"),
+            "Bills": Color(hex: "ffd60a"),
+            "Travel": Color(hex: "ff375f"),
+            "Education": Color(hex: "ac8e68"),
+            "Salary": Color(hex: "34c759"),
+            "Other": Color(hex: "8e8e93")
+        ]
+        return colors[category] ?? Color(hex: "8e8e93")
+    }
+}
+
+// MARK: - Mini Pie Chart for Monthly Report
+
+struct MiniPieChart: View {
+    let categories: [MonthlyReport.CategorySpending]
+
+    var body: some View {
+        GeometryReader { geo in
+            let radius = min(geo.size.width, geo.size.height) / 2
+            let center = CGPoint(x: geo.size.width / 2, y: geo.size.height / 2)
+
+            ZStack {
+                ForEach(Array(sliceData.enumerated()), id: \.offset) { index, slice in
+                    ChartPieSlice(startAngle: slice.startAngle, endAngle: slice.endAngle)
+                        .fill(paletteColor(for: index))
+                }
+
+                // Donut hole
+                Circle()
+                    .fill(Color(hex: "1c1c1e"))
+                    .frame(width: radius * 0.5, height: radius * 0.5)
+            }
+        }
+    }
+
+    private var sliceData: [(startAngle: Angle, endAngle: Angle)] {
+        var slices: [(startAngle: Angle, endAngle: Angle)] = []
+        var currentAngle: Double = -90
+
+        for cat in categories {
+            let degrees = cat.percentage / 100 * 360
+            let startAngle = Angle(degrees: currentAngle)
+            let endAngle = Angle(degrees: currentAngle + degrees)
+            slices.append((startAngle, endAngle))
+            currentAngle += degrees
+        }
+
+        return slices
+    }
+
+    private func paletteColor(for index: Int) -> Color {
+        let palette: [Color] = [
+            Color(hex: "ff453a"),
+            Color(hex: "0a84ff"),
+            Color(hex: "30d158"),
+            Color(hex: "ff9f0a"),
+            Color(hex: "bf5af2"),
+            Color(hex: "64d2ff"),
+            Color(hex: "ffd60a"),
+            Color(hex: "ff375f")
+        ]
+        return palette[index % palette.count]
+    }
+}
+
+struct ChartPieSlice: Shape {
+    let startAngle: Angle
+    let endAngle: Angle
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        let center = CGPoint(x: rect.midX, y: rect.midY)
+        let radius = min(rect.width, rect.height) / 2
+
+        path.move(to: center)
+        path.addArc(center: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: false)
+        path.closeSubpath()
+
+        return path
     }
 }
