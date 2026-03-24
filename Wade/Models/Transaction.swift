@@ -149,3 +149,43 @@ struct MonthlyReport: Identifiable {
         return pct > 0 ? "ff453a" : "34c759"
     }
 }
+
+// MARK: - Yearly Summary
+
+struct YearlySummary {
+    let year: Int
+    let totalSpent: Double
+    let totalIncome: Double
+    let net: Double
+    let monthlyBreakdown: [MonthlyTotal]
+    let topCategories: [CategoryTotal]
+    let biggestMonth: MonthlyTotal?
+    let transactionCount: Int
+
+    struct MonthlyTotal {
+        let month: Int
+        let total: Double
+
+        var monthName: String {
+            let components = DateComponents(year: 2024, month: month)
+            let calendar = Calendar.current
+            guard let date = calendar.date(from: components) else { return "" }
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMMM"
+            return formatter.string(from: date)
+        }
+    }
+
+    struct CategoryTotal {
+        let category: String
+        let amount: Double
+    }
+
+    var biggestMonthName: String {
+        biggestMonth?.monthName ?? "N/A"
+    }
+
+    var biggestMonthAmount: Double {
+        biggestMonth?.total ?? 0
+    }
+}

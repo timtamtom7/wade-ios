@@ -94,6 +94,8 @@ enum MessageType: String {
     case recurringBillsList
     case parseFailure
     case error
+    case exportReady
+    case yearlySummary
 }
 
 struct Message: Identifiable {
@@ -110,6 +112,8 @@ struct Message: Identifiable {
     let budgetAlert: BudgetAlert?
     let recurringDetection: RecurringDetection?
     let recurringBills: [RecurringExpense]?
+    let exportFileURL: URL?
+    let yearlySummaryData: YearlySummary?
     let messageType: MessageType
 
     init(
@@ -126,6 +130,8 @@ struct Message: Identifiable {
         budgetAlert: BudgetAlert? = nil,
         recurringDetection: RecurringDetection? = nil,
         recurringBills: [RecurringExpense]? = nil,
+        exportFileURL: URL? = nil,
+        yearlySummaryData: YearlySummary? = nil,
         messageType: MessageType = .text
     ) {
         self.id = id
@@ -141,6 +147,8 @@ struct Message: Identifiable {
         self.budgetAlert = budgetAlert
         self.recurringDetection = recurringDetection
         self.recurringBills = recurringBills
+        self.exportFileURL = exportFileURL
+        self.yearlySummaryData = yearlySummaryData
         self.messageType = messageType
     }
 
@@ -208,6 +216,36 @@ struct Message: Identifiable {
             recurringBills: bills,
             messageType: .recurringBillsList
         )
+    }
+
+    static func yearlySummaryMessage(_ summary: YearlySummary) -> Message {
+        Message(
+            role: .wade,
+            text: yearlySummaryText(summary),
+            yearlySummaryData: summary,
+            messageType: .yearlySummary
+        )
+    }
+
+    private static func yearlySummaryText(_ summary: YearlySummary) -> String {
+        var text = "📅 \(summary.year) Year Summary\n\n"
+        text += "Total spent: \(formatCurrency(summary.totalSpent))\n"
+        text += "Total income: \(formatCurrency(summary.totalIncome))\n"
+        text += "Net: \(summary.net >= 0 ? "+" : "")\(formatCurrency(summary.net))\n\n"
+
+        if let biggest = summary.biggestMonth {
+            text += "🏆 Biggest month: \(biggest.monthName) (\(formatCurrency(biggest.total)))\n"
+        }
+
+        if !summary.topCategories.isEmpty {
+            text += "Top categories:\n"
+            for cat in summary.topCategories.prefix(3) {
+                text += "• \(cat.category): \(formatCurrency(cat.amount))\n"
+            }
+        }
+
+        text += "\n\(summary.transactionCount) transactions"
+        return text
     }
 
     private static func recurringBillsListText(_ bills: [RecurringExpense]) -> String {

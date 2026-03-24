@@ -13,6 +13,7 @@
 		34068D4A2EBB51BC859DFAE3 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7626BEC16192DD5A5A6136BA /* NotificationService.swift */; };
 		346498BD7713705C56DF7316 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 15D1F464FEB194C1AB137B54 /* SQLite */; };
 		3A01962C128482399988999D /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05969B6AC7AAC823329D1DF8 /* DatabaseService.swift */; };
+		4BBD64619D16314F0FE3F2AB /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F302423881615E6E5AB918 /* ExportService.swift */; };
 		4F6B0F5E8CA7884A2C487CE4 /* ExpenseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA6928A2E5F311739B0E844 /* ExpenseParser.swift */; };
 		5972E970DFE597C2278698BC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ECB2ABEF494E96A951F682 /* SettingsView.swift */; };
 		597EA3142ECB1D86C5298A92 /* RecurringExpenseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1C7F8C2A976EF86407479 /* RecurringExpenseService.swift */; };
@@ -22,10 +23,10 @@
 		856F7BA2FACC4907360D6108 /* WadeResponseCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C362C202F0264608B7A7ED /* WadeResponseCard.swift */; };
 		8597C79A160D796A71736DA5 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9F4431F11F1B52C46D9391 /* Transaction.swift */; };
 		AE3BA3BDD66F1BDE8F825DDC /* GraphicsPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62FDAE72368B24D61B5FEA0B /* GraphicsPreviewView.swift */; };
+		B4B4199146D42897479762AE /* CurrencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E0B793F3297EE9E58F72C1 /* CurrencyService.swift */; };
 		B89B691D4A11758093A712F8 /* MessageBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F35A797F5EC75109736091 /* MessageBubbleView.swift */; };
 		C32AECCADDAC08167A8DC651 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4AFD8214CADBE45898F0CD /* OnboardingView.swift */; };
 		C8DD79C9A8C58F6ACCBAB717 /* BudgetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB64CE3184F687CFE515A522 /* BudgetService.swift */; };
-		C1A2B3D4E5F6789012345678 /* CurrencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6789012345678 /* CurrencyService.swift */; };
 		DC59DB2D43A9E84D404DD231 /* MonthlyReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9285BFC14C8ACEEC5828DC82 /* MonthlyReportService.swift */; };
 		EBFAB5A263D79F25C0BBD136 /* ErrorStateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABB488382B2D624156976DB /* ErrorStateViews.swift */; };
 		EFAF4C033AE68B7AA4F3F0FD /* SubscriptionTier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A71CA154FB478ECD2DF106 /* SubscriptionTier.swift */; };
@@ -47,13 +48,14 @@
 		7626BEC16192DD5A5A6136BA /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		7ABB488382B2D624156976DB /* ErrorStateViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorStateViews.swift; sourceTree = "<group>"; };
 		7B4AFD8214CADBE45898F0CD /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		88E0B793F3297EE9E58F72C1 /* CurrencyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyService.swift; sourceTree = "<group>"; };
 		8EA29AEF29332CE925D472E9 /* Wade.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Wade.entitlements; sourceTree = "<group>"; };
 		9285BFC14C8ACEEC5828DC82 /* MonthlyReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyReportService.swift; sourceTree = "<group>"; };
 		9371DFC75BBB9E5B2453D78D /* PricingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingView.swift; sourceTree = "<group>"; };
 		A6ECB2ABEF494E96A951F682 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		AC877A613C96473E5611767C /* Wade.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Wade.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7F302423881615E6E5AB918 /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
 		CB64CE3184F687CFE515A522 /* BudgetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetService.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F6789012345678 /* CurrencyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyService.swift; sourceTree = "<group>"; };
 		DD9F4431F11F1B52C46D9391 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		E6C362C202F0264608B7A7ED /* WadeResponseCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WadeResponseCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -75,9 +77,10 @@
 			children = (
 				CB64CE3184F687CFE515A522 /* BudgetService.swift */,
 				541EAF1E5094E0D256DEE79A /* ConversationService.swift */,
-				A1B2C3D4E5F6789012345678 /* CurrencyService.swift */,
+				88E0B793F3297EE9E58F72C1 /* CurrencyService.swift */,
 				05969B6AC7AAC823329D1DF8 /* DatabaseService.swift */,
 				1FA6928A2E5F311739B0E844 /* ExpenseParser.swift */,
+				B7F302423881615E6E5AB918 /* ExportService.swift */,
 				9285BFC14C8ACEEC5828DC82 /* MonthlyReportService.swift */,
 				7626BEC16192DD5A5A6136BA /* NotificationService.swift */,
 				27A1C7F8C2A976EF86407479 /* RecurringExpenseService.swift */,
@@ -231,11 +234,12 @@
 			files = (
 				C8DD79C9A8C58F6ACCBAB717 /* BudgetService.swift in Sources */,
 				745634AAE5DC57B859861D07 /* ConversationService.swift in Sources */,
-				C1A2B3D4E5F6789012345678 /* CurrencyService.swift in Sources */,
 				220BBABDD60FEBCF14CCB26F /* ConversationView.swift in Sources */,
+				B4B4199146D42897479762AE /* CurrencyService.swift in Sources */,
 				3A01962C128482399988999D /* DatabaseService.swift in Sources */,
 				EBFAB5A263D79F25C0BBD136 /* ErrorStateViews.swift in Sources */,
 				4F6B0F5E8CA7884A2C487CE4 /* ExpenseParser.swift in Sources */,
+				4BBD64619D16314F0FE3F2AB /* ExportService.swift in Sources */,
 				AE3BA3BDD66F1BDE8F825DDC /* GraphicsPreviewView.swift in Sources */,
 				272D8E918B08E44FF7FD16EC /* Message.swift in Sources */,
 				B89B691D4A11758093A712F8 /* MessageBubbleView.swift in Sources */,

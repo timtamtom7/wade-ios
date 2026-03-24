@@ -40,6 +40,10 @@ struct WadeResponseCard: View {
                     recurringBillsListContent
                 case .weeklySummary:
                     weeklySummaryContent
+                case .yearlySummary:
+                    yearlySummaryContent
+                case .exportReady:
+                    exportReadyContent
                 default:
                     if let tx = message.transaction {
                         transactionContent(tx)
@@ -470,6 +474,141 @@ struct WadeResponseCard: View {
                         .font(.system(size: 11, design: .monospaced))
                         .foregroundColor(secondaryColor)
                 }
+            }
+        }
+    }
+
+    // MARK: - Yearly Summary Content
+
+    private var yearlySummaryContent: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            if let summary = message.yearlySummaryData {
+                HStack(spacing: 6) {
+                    Text("📅")
+                        .font(.system(size: 16))
+                    Text("\(summary.year) Summary")
+                        .font(.system(size: 15, weight: .bold))
+                        .foregroundColor(textColor)
+                }
+
+                Divider()
+                    .background(secondaryColor.opacity(0.3))
+
+                // Totals
+                VStack(spacing: 8) {
+                    HStack {
+                        Text("Total Spent")
+                            .font(.system(size: 13))
+                            .foregroundColor(secondaryColor)
+                        Spacer()
+                        Text(formatCurrency(summary.totalSpent))
+                            .font(.system(size: 15, weight: .semibold, design: .monospaced))
+                            .foregroundColor(expenseColor)
+                    }
+
+                    HStack {
+                        Text("Total Income")
+                            .font(.system(size: 13))
+                            .foregroundColor(secondaryColor)
+                        Spacer()
+                        Text(formatCurrency(summary.totalIncome))
+                            .font(.system(size: 15, weight: .semibold, design: .monospaced))
+                            .foregroundColor(incomeColor)
+                    }
+
+                    HStack {
+                        Text("Net")
+                            .font(.system(size: 13))
+                            .foregroundColor(secondaryColor)
+                        Spacer()
+                        let sign = summary.net >= 0 ? "+" : ""
+                        Text("\(sign)\(formatCurrency(abs(summary.net)))")
+                            .font(.system(size: 15, weight: .semibold, design: .monospaced))
+                            .foregroundColor(summary.net >= 0 ? incomeColor : expenseColor)
+                    }
+                }
+
+                // Biggest month
+                if let biggest = summary.biggestMonth {
+                    Divider()
+                        .background(secondaryColor.opacity(0.3))
+                    HStack {
+                        Text("🏆 Biggest month")
+                            .font(.system(size: 12))
+                            .foregroundColor(textColor)
+                        Spacer()
+                        VStack(alignment: .trailing, spacing: 2) {
+                            Text(biggest.monthName)
+                                .font(.system(size: 12, weight: .semibold))
+                                .foregroundColor(accentColor)
+                            Text(formatCurrency(biggest.total))
+                                .font(.system(size: 11, design: .monospaced))
+                                .foregroundColor(secondaryColor)
+                        }
+                    }
+                }
+
+                // Top categories
+                if !summary.topCategories.isEmpty {
+                    Divider()
+                        .background(secondaryColor.opacity(0.3))
+
+                    Text("Top categories")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(secondaryColor)
+
+                    ForEach(summary.topCategories.prefix(3), id: \.category) { cat in
+                        HStack {
+                            Text(cat.category)
+                                .font(.system(size: 12))
+                                .foregroundColor(textColor)
+                            Spacer()
+                            Text(formatCurrency(cat.amount))
+                                .font(.system(size: 12, design: .monospaced))
+                                .foregroundColor(secondaryColor)
+                        }
+                    }
+                }
+
+                // Transaction count
+                HStack {
+                    Text("\(summary.transactionCount) transactions")
+                        .font(.system(size: 11))
+                        .foregroundColor(secondaryColor)
+                }
+            }
+        }
+    }
+
+    // MARK: - Export Ready Content
+
+    private var exportReadyContent: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 6) {
+                Text("📄")
+                    .font(.system(size: 16))
+                Text("Export Ready")
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(textColor)
+            }
+
+            Divider()
+                .background(secondaryColor.opacity(0.3))
+
+            Text(message.text)
+                .font(.system(size: 13))
+                .foregroundColor(textColor)
+                .fixedSize(horizontal: false, vertical: true)
+
+            if message.exportFileURL != nil {
+                HStack(spacing: 6) {
+                    Image(systemName: "square.and.arrow.up")
+                        .font(.system(size: 12))
+                    Text("Tap to share or save")
+                        .font(.system(size: 12))
+                }
+                .foregroundColor(Color(hex: "5ac8fa"))
+                .padding(.top, 4)
             }
         }
     }
