@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		00C024FA31D6E234BBF94FF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C719EAC1DC3BC142C2A9F0BC /* AppDelegate.swift */; };
 		140D37096395E2854A4C804F /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888148842D602A266272C325 /* MenuBarView.swift */; };
+		15D38AE35AA36F19F02ACE84 /* APPSTORE.md in Resources */ = {isa = PBXBuildFile; fileRef = 8859C0D6E50227D0DE934DC3 /* APPSTORE.md */; };
 		2192FBBA73A92E29555997CF /* TravelUpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7FC7ACAD5B72821F3BD639 /* TravelUpdateService.swift */; };
 		408C0A83C7BF247FF1F2D71A /* GroupPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F3413BEF4CAF63356F426D /* GroupPlanningView.swift */; };
 		522EDBE02A9457FEF931036C /* TravelSocialService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1549D68895DCAFD0250CB630 /* TravelSocialService.swift */; };
@@ -34,6 +35,7 @@
 		7478B2BF337165B7441FE6D3 /* AITripService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AITripService.swift; sourceTree = "<group>"; };
 		75ED0B2D044553192A879A9A /* CurrencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyView.swift; sourceTree = "<group>"; };
 		861D516F072C6BD41DC5D865 /* PackingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingListView.swift; sourceTree = "<group>"; };
+		8859C0D6E50227D0DE934DC3 /* APPSTORE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = APPSTORE.md; sourceTree = "<group>"; };
 		888148842D602A266272C325 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 		91F3413BEF4CAF63356F426D /* GroupPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPlanningView.swift; sourceTree = "<group>"; };
 		A1E00A92990DFFA3AA53917B /* BookingIntegrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingIntegrationView.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				9AE79A75CFB048387829D6E2 /* App */,
+				AC8ECD53A8517595FB449558 /* Marketing */,
 				90ACCCD6B6F3403F015BAC59 /* Models */,
 				302A1BDF5AA55B5778FA39AD /* Services */,
 				61592A33ABD34C8D58ED9363 /* Sources */,
@@ -122,6 +125,14 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		AC8ECD53A8517595FB449558 /* Marketing */ = {
+			isa = PBXGroup;
+			children = (
+				8859C0D6E50227D0DE934DC3 /* APPSTORE.md */,
+			);
+			path = Marketing;
+			sourceTree = "<group>";
+		};
 		C471F19EA897F276C11BDC76 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +154,7 @@
 			buildConfigurationList = 35AA10EFC184224D978202EE /* Build configuration list for PBXNativeTarget "WadeMac" */;
 			buildPhases = (
 				EB17159BDFB894A56E71C2E3 /* Sources */,
+				54C54A1AF6C4C0EA951D3195 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -183,6 +195,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		54C54A1AF6C4C0EA951D3195 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15D38AE35AA36F19F02ACE84 /* APPSTORE.md in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EB17159BDFB894A56E71C2E3 /* Sources */ = {
