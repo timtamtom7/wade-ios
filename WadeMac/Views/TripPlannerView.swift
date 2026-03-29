@@ -342,31 +342,4 @@ struct TravelQueryParser {
     }
 }
 
-struct AITripService {
-    static func generateItinerary(destination: String, startDate: Date, endDate: Date, style: TravelStyle) -> [ItineraryDay] {
-        let dayCount = Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 7
 
-        let sampleActivities: [(String, String, String, Bool)] = [
-            ("Morning", "Arrive & Check In", "Airport / Hotel", true),
-            ("10:00 AM", "City Walking Tour", "Historic District", false),
-            ("1:00 PM", "Local Lunch", "Recommended Restaurant", false),
-            ("3:00 PM", "Top Attraction Visit", "Main Landmark", false),
-            ("7:00 PM", "Dinner & Evening Walk", "Waterfront / Downtown", false),
-        ]
-
-        return (1...max(dayCount, 1)).map { dayNum in
-            let date = Calendar.current.date(byAdding: .day, value: dayNum - 1, to: startDate) ?? startDate
-            let activities = sampleActivities.map { (time, title, location, reserved) in
-                Activity(
-                    id: UUID(),
-                    time: time,
-                    title: "\(title) - Day \(dayNum)",
-                    location: location,
-                    notes: "AI suggested based on \(style.rawValue.lowercased()) travel style",
-                    reserved: reserved
-                )
-            }
-            return ItineraryDay(id: UUID(), day: dayNum, date: date, activities: activities)
-        }
-    }
-}
