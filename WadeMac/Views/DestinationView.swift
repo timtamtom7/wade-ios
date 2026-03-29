@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct DestinationView: View {
+    @Environment(\.colorScheme) var colorScheme
     @State private var searchText: String = ""
     @State private var selectedDestination: Destination?
 
@@ -40,7 +41,7 @@ struct DestinationView: View {
                 }
             }
         }
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
     }
 
     private var headerSection: some View {
@@ -52,14 +53,14 @@ struct DestinationView: View {
                 Text("Destinations")
                     .font(.title3)
                     .fontWeight(.bold)
-                    .foregroundColor(Theme.textPrimary)
+                    .foregroundColor(Theme.textPrimaryLight)
                 Spacer()
             }
 
             SearchField(text: $searchText, placeholder: "Search destinations...")
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
     }
 }
 
@@ -70,18 +71,18 @@ struct SearchField: View {
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
-                .foregroundColor(Theme.textPrimary.opacity(0.4))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.4))
             TextField(placeholder, text: $text)
                 .textFieldStyle(.plain)
             if !text.isEmpty {
                 Button(action: { text = "" }) {
                     Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(Theme.textPrimary.opacity(0.3))
+                        .foregroundColor(Theme.textPrimaryLight.opacity(0.3))
                 }
             }
         }
         .padding(8)
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
         .cornerRadius(8)
     }
 }
@@ -107,20 +108,20 @@ struct DestinationCard: View {
                     Text(destination.name)
                         .font(.subheadline)
                         .fontWeight(.bold)
-                        .foregroundColor(Theme.textPrimary)
+                        .foregroundColor(Theme.textPrimaryLight)
 
                     Text(destination.country)
                         .font(.caption)
-                        .foregroundColor(Theme.textPrimary.opacity(0.5))
+                        .foregroundColor(Theme.textPrimaryLight.opacity(0.5))
                 }
 
                 Text(destination.description)
                     .font(.caption2)
-                    .foregroundColor(Theme.textPrimary.opacity(0.6))
+                    .foregroundColor(Theme.textPrimaryLight.opacity(0.6))
                     .lineLimit(2)
             }
             .padding(12)
-            .background(Theme.cardBg)
+            .background(Theme.cardBgLight)
             .cornerRadius(12)
             .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
         }
@@ -143,7 +144,7 @@ struct DestinationDetailView: View {
                     Spacer()
                     Text(destination.name)
                         .font(.headline)
-                        .foregroundColor(Theme.textPrimary)
+                        .foregroundColor(Theme.textPrimaryLight)
                     Spacer()
                     Spacer().frame(width: 20)
                 }
@@ -159,21 +160,21 @@ struct DestinationDetailView: View {
                             Text(destination.name)
                                 .font(.title2)
                                 .fontWeight(.bold)
-                                .foregroundColor(Theme.textPrimary)
+                                .foregroundColor(Theme.textPrimaryLight)
                             Text(destination.country)
                                 .font(.caption)
-                                .foregroundColor(Theme.textPrimary.opacity(0.5))
+                                .foregroundColor(Theme.textPrimaryLight.opacity(0.5))
                         }
                     }
 
                     Text(destination.description)
                         .font(.subheadline)
-                        .foregroundColor(Theme.textPrimary.opacity(0.8))
+                        .foregroundColor(Theme.textPrimaryLight.opacity(0.8))
                         .padding(.top, 4)
                 }
                 .padding(16)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Theme.cardBg)
+                .background(Theme.cardBgLight)
                 .cornerRadius(12)
                 .padding(.horizontal, 16)
 
@@ -210,12 +211,12 @@ struct AttractionsSection: View {
                         .foregroundColor(Theme.sunsetOrange)
                     Text(attraction)
                         .font(.subheadline)
-                        .foregroundColor(Theme.textPrimary)
+                        .foregroundColor(Theme.textPrimaryLight)
                 }
             }
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
         .padding(.horizontal, 16)
     }
@@ -234,12 +235,12 @@ struct RestaurantsSection: View {
                         .foregroundColor(Theme.palmGreen)
                     Text(restaurant)
                         .font(.subheadline)
-                        .foregroundColor(Theme.textPrimary)
+                        .foregroundColor(Theme.textPrimaryLight)
                 }
             }
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
         .padding(.horizontal, 16)
     }
@@ -258,12 +259,12 @@ struct TipsSection: View {
                         .foregroundColor(Theme.oceanBlue)
                     Text(tip)
                         .font(.caption)
-                        .foregroundColor(Theme.textPrimary.opacity(0.8))
+                        .foregroundColor(Theme.textPrimaryLight.opacity(0.8))
                 }
             }
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
         .padding(.horizontal, 16)
     }
@@ -280,7 +281,7 @@ struct SectionHeader: View {
             Text(title)
                 .font(.subheadline)
                 .fontWeight(.bold)
-                .foregroundColor(Theme.textPrimary)
+                .foregroundColor(Theme.textPrimaryLight)
         }
     }
 }

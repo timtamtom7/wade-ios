@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct BookingIntegrationView: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appState: AppState
     @StateObject private var travelService = TravelUpdateService.shared
 
@@ -19,7 +20,7 @@ struct BookingIntegrationView: View {
             }
             .padding(20)
         }
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
         .onAppear {
             travelService.fetchExchangeRates()
         }
@@ -34,7 +35,7 @@ struct BookingIntegrationView: View {
                     .foregroundColor(Theme.oceanBlue)
                 Text("Flight Tracker")
                     .font(.headline)
-                    .foregroundColor(Theme.textPrimary)
+                    .foregroundColor(Theme.textPrimaryLight)
                 Spacer()
                 if isTrackingFlight {
                     Button("Stop Tracking") {
@@ -49,7 +50,7 @@ struct BookingIntegrationView: View {
                 TextField("Enter flight number (e.g., AA123)", text: $flightNumber)
                     .textFieldStyle(.plain)
                     .padding(10)
-                    .background(Theme.surface)
+                    .background(Theme.surfaceLight)
                     .cornerRadius(8)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
@@ -78,7 +79,7 @@ struct BookingIntegrationView: View {
             }
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
     }
@@ -102,7 +103,7 @@ struct BookingIntegrationView: View {
                     .foregroundColor(Theme.oceanBlue)
                 Text("Quick Booking")
                     .font(.headline)
-                    .foregroundColor(Theme.textPrimary)
+                    .foregroundColor(Theme.textPrimaryLight)
                 Spacer()
             }
 
@@ -151,7 +152,7 @@ struct BookingIntegrationView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Booking for: \(trip.destination)")
                         .font(.caption)
-                        .foregroundColor(Theme.textPrimary.opacity(0.6))
+                        .foregroundColor(Theme.textPrimaryLight.opacity(0.6))
 
                     HStack(spacing: 8) {
                         Button(action: { openSkyscanner(for: trip.destination) }) {
@@ -185,7 +186,7 @@ struct BookingIntegrationView: View {
             }
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
     }
@@ -199,12 +200,12 @@ struct BookingIntegrationView: View {
                     .foregroundColor(Theme.sunsetOrange)
                 Text("Trip Costs")
                     .font(.headline)
-                    .foregroundColor(Theme.textPrimary)
+                    .foregroundColor(Theme.textPrimaryLight)
                 Spacer()
                 Button(action: { showCostTracker.toggle() }) {
                     Image(systemName: showCostTracker ? "chevron.up" : "chevron.down")
                         .font(.caption)
-                        .foregroundColor(Theme.textPrimary.opacity(0.5))
+                        .foregroundColor(Theme.textPrimaryLight.opacity(0.5))
                 }
             }
 
@@ -213,12 +214,12 @@ struct BookingIntegrationView: View {
             } else {
                 Text("No trip selected. Select a trip to track costs.")
                     .font(.caption)
-                    .foregroundColor(Theme.textPrimary.opacity(0.5))
+                    .foregroundColor(Theme.textPrimaryLight.opacity(0.5))
                     .padding(.vertical, 8)
             }
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
     }
@@ -232,7 +233,7 @@ struct BookingIntegrationView: View {
                     .foregroundColor(Theme.midnight)
                 Text("Travel Documents")
                     .font(.headline)
-                    .foregroundColor(Theme.textPrimary)
+                    .foregroundColor(Theme.textPrimaryLight)
                 Spacer()
                 Button(action: {}) {
                     Image(systemName: "plus.circle.fill")
@@ -248,10 +249,10 @@ struct BookingIntegrationView: View {
 
             Text("Store flight confirmations, hotel bookings, and travel insurance details securely.")
                 .font(.caption2)
-                .foregroundColor(Theme.textPrimary.opacity(0.5))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.5))
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
     }
@@ -309,14 +310,14 @@ struct BookingLinkCard: View {
                 Text(title)
                     .font(.subheadline)
                     .fontWeight(.medium)
-                    .foregroundColor(Theme.textPrimary)
+                    .foregroundColor(Theme.textPrimaryLight)
                 Text(subtitle)
                     .font(.caption2)
-                    .foregroundColor(Theme.textPrimary.opacity(0.5))
+                    .foregroundColor(Theme.textPrimaryLight.opacity(0.5))
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 16)
-            .background(Theme.surface)
+            .background(Theme.surfaceLight)
             .cornerRadius(10)
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
@@ -336,10 +337,10 @@ struct FlightStatusCard: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(flight.flightNumber)
                         .font(.headline)
-                        .foregroundColor(Theme.textPrimary)
+                        .foregroundColor(Theme.textPrimaryLight)
                     Text(flight.airline)
                         .font(.caption)
-                        .foregroundColor(Theme.textPrimary.opacity(0.6))
+                        .foregroundColor(Theme.textPrimaryLight.opacity(0.6))
                 }
                 Spacer()
                 HStack(spacing: 4) {
@@ -378,10 +379,10 @@ struct FlightStatusCard: View {
 
             Text(flight.statusDescription)
                 .font(.caption)
-                .foregroundColor(Theme.textPrimary.opacity(0.7))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.7))
         }
         .padding(12)
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
         .cornerRadius(8)
     }
 
@@ -469,7 +470,7 @@ struct CostRow: View {
             Spacer()
             Text(String(format: "$%.2f", item.amount))
                 .font(.subheadline)
-                .foregroundColor(Theme.textPrimary)
+                .foregroundColor(Theme.textPrimaryLight)
         }
         .padding(.vertical, 4)
     }
@@ -488,7 +489,7 @@ struct DocumentRow: View {
             case .valid: return Theme.palmGreen
             case .expiringSoon: return Theme.sunsetOrange
             case .expired: return Theme.accentCoral
-            case .checkRequired: return Theme.textPrimary.opacity(0.5)
+            case .checkRequired: return Theme.textPrimaryLight.opacity(0.5)
             }
         }
 
@@ -512,7 +513,7 @@ struct DocumentRow: View {
             if let date = expiryDate {
                 Text("• Expires \(date.formatted(date: .abbreviated, time: .omitted))")
                     .font(.caption)
-                    .foregroundColor(Theme.textPrimary.opacity(0.5))
+                    .foregroundColor(Theme.textPrimaryLight.opacity(0.5))
             }
             Spacer()
             Text(status.label)

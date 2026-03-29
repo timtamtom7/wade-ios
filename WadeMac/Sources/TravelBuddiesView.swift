@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct TravelBuddiesView: View {
+    @Environment(\.colorScheme) var colorScheme
     @StateObject private var viewModel = TravelBuddiesViewModel()
     @State private var searchText = ""
     @State private var selectedDestination = "Tokyo"
@@ -41,7 +42,7 @@ struct TravelBuddiesView: View {
                 .padding()
             }
         }
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
         .sheet(isPresented: $showConnectSheet) {
             if let buddy = selectedBuddy {
                 BuddyDetailSheet(buddy: buddy, isPresented: $showConnectSheet)
@@ -117,7 +118,7 @@ struct TravelBuddiesView: View {
                 }
             }
             .padding(10)
-            .background(Theme.surface)
+            .background(Theme.surfaceLight)
             .cornerRadius(10)
         }
         .padding()
@@ -229,7 +230,7 @@ struct BuddyCardView: View {
             }
         }
         .padding()
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 4, y: 2)
         .onTapGesture {
@@ -292,7 +293,7 @@ struct BuddyDetailSheet: View {
                         detailRow(icon: "person.2", title: "Mutual Contacts", value: "\(buddy.mutualContacts) people you know")
                     }
                     .padding()
-                    .background(Theme.surface)
+                    .background(Theme.surfaceLight)
                     .cornerRadius(12)
 
                     // Connect Actions

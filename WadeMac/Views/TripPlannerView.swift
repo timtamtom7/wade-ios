@@ -2,6 +2,7 @@ import SwiftUI
 import NaturalLanguage
 
 struct TripPlannerView: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appState: AppState
     @State private var destination: String = ""
     @State private var startDate: Date = Date()
@@ -23,7 +24,7 @@ struct TripPlannerView: View {
             }
             .padding(20)
         }
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
     }
 
     private var headerSection: some View {
@@ -35,15 +36,15 @@ struct TripPlannerView: View {
                 Text("AI Trip Planner")
                     .font(.title2)
                     .fontWeight(.bold)
-                    .foregroundColor(Theme.textPrimary)
+                    .foregroundColor(Theme.textPrimaryLight)
                 Spacer()
             }
             Text("Plan your perfect trip with AI-powered itineraries")
                 .font(.caption)
-                .foregroundColor(Theme.textPrimary.opacity(0.6))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.6))
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
     }
@@ -66,7 +67,7 @@ struct TripPlannerView: View {
             generateButton
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
     }
@@ -102,7 +103,7 @@ struct TripPlannerView: View {
             HStack {
                 Text("Your Itinerary")
                     .font(.headline)
-                    .foregroundColor(Theme.textPrimary)
+                    .foregroundColor(Theme.textPrimaryLight)
                 Spacer()
                 Button("Save Trip") {
                     saveTrip()
@@ -116,7 +117,7 @@ struct TripPlannerView: View {
             }
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
     }
@@ -161,7 +162,7 @@ struct QueryInputField: View {
             TextField(placeholder, text: $text)
                 .textFieldStyle(.plain)
                 .padding(12)
-                .background(Theme.surface)
+                .background(Theme.surfaceLight)
                 .cornerRadius(8)
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
@@ -185,7 +186,7 @@ struct DatePickerField: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(title)
                 .font(.caption)
-                .foregroundColor(Theme.textPrimary.opacity(0.6))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.6))
             DatePicker(
                 "",
                 selection: $date,
@@ -205,7 +206,7 @@ struct TravelStylePicker: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Travel Style")
                 .font(.caption)
-                .foregroundColor(Theme.textPrimary.opacity(0.6))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.6))
 
             HStack(spacing: 8) {
                 ForEach(TravelStyle.allCases, id: \.self) { style in
@@ -237,8 +238,8 @@ struct TravelStyleButton: View {
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
-            .background(isSelected ? Theme.oceanBlue : Theme.surface)
-            .foregroundColor(isSelected ? .white : Theme.textPrimary)
+            .background(isSelected ? Theme.oceanBlue : Theme.surfaceLight)
+            .foregroundColor(isSelected ? .white : Theme.textPrimaryLight)
             .cornerRadius(16)
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
@@ -261,7 +262,7 @@ struct ItineraryDayCard: View {
                     .foregroundColor(Theme.oceanBlue)
                 Text(day.date.formatted(date: .abbreviated, time: .omitted))
                     .font(.caption)
-                    .foregroundColor(Theme.textPrimary.opacity(0.5))
+                    .foregroundColor(Theme.textPrimaryLight.opacity(0.5))
                 Spacer()
             }
 
@@ -270,7 +271,7 @@ struct ItineraryDayCard: View {
             }
         }
         .padding(12)
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
         .cornerRadius(8)
     }
 }
@@ -291,7 +292,7 @@ struct ActivityRow: View {
                     Text(activity.title)
                         .font(.subheadline)
                         .fontWeight(.medium)
-                        .foregroundColor(Theme.textPrimary)
+                        .foregroundColor(Theme.textPrimaryLight)
                     if activity.reserved {
                         Image(systemName: "checkmark.seal.fill")
                             .font(.caption2)
@@ -300,7 +301,7 @@ struct ActivityRow: View {
                 }
                 Text(activity.location)
                     .font(.caption2)
-                    .foregroundColor(Theme.textPrimary.opacity(0.5))
+                    .foregroundColor(Theme.textPrimaryLight.opacity(0.5))
             }
             Spacer()
         }

@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct CurrencyView: View {
+    @Environment(\.colorScheme) var colorScheme
     @State private var amount: String = "100"
     @State private var fromCurrency: Currency = .usd
     @State private var toCurrency: Currency = .eur
@@ -28,7 +29,7 @@ struct CurrencyView: View {
             .pickerStyle(.segmented)
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
-            .background(Theme.cardBg)
+            .background(Theme.cardBgLight)
 
             if selectedTab == .converter {
                 converterSection
@@ -36,7 +37,7 @@ struct CurrencyView: View {
                 tipSection
             }
         }
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
         .onAppear {
             convert()
             calculateTip()
@@ -51,11 +52,11 @@ struct CurrencyView: View {
             Text("Currency & Tips")
                 .font(.title3)
                 .fontWeight(.bold)
-                .foregroundColor(Theme.textPrimary)
+                .foregroundColor(Theme.textPrimaryLight)
             Spacer()
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
     }
 
     private var converterSection: some View {
@@ -74,7 +75,7 @@ struct CurrencyView: View {
         VStack(alignment: .leading, spacing: 6) {
             Text("Amount")
                 .font(.caption)
-                .foregroundColor(Theme.textPrimary.opacity(0.6))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.6))
 
             HStack {
                 Text(fromCurrency.symbol)
@@ -87,11 +88,11 @@ struct CurrencyView: View {
                     .onChange(of: amount) { _, _ in convert() }
             }
             .padding(12)
-            .background(Theme.surface)
+            .background(Theme.surfaceLight)
             .cornerRadius(10)
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
     }
 
@@ -105,7 +106,7 @@ struct CurrencyView: View {
                     Image(systemName: "arrow.left.arrow.right")
                         .foregroundColor(Theme.oceanBlue)
                         .padding(8)
-                        .background(Theme.surface)
+                        .background(Theme.surfaceLight)
                         .cornerRadius(8)
                 }
                 .buttonStyle(.plain)
@@ -115,7 +116,7 @@ struct CurrencyView: View {
             }
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
     }
 
@@ -123,7 +124,7 @@ struct CurrencyView: View {
         VStack(spacing: 8) {
             Text("Converted Amount")
                 .font(.caption)
-                .foregroundColor(Theme.textPrimary.opacity(0.6))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.6))
 
             Text("\(toCurrency.symbol) \(String(format: "%.2f", convertedAmount))")
                 .font(.system(size: 36, weight: .bold, design: .rounded))
@@ -131,7 +132,7 @@ struct CurrencyView: View {
 
             Text("1 \(fromCurrency.code) = \(String(format: "%.4f", fromCurrency.rate)) \(toCurrency.code)")
                 .font(.caption2)
-                .foregroundColor(Theme.textPrimary.opacity(0.4))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.4))
         }
         .frame(maxWidth: .infinity)
         .padding(20)
@@ -144,7 +145,7 @@ struct CurrencyView: View {
         )
         .cornerRadius(12)
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(16)
     }
 
@@ -156,14 +157,14 @@ struct CurrencyView: View {
                 Text("Exchange Rates")
                     .font(.caption)
                     .fontWeight(.medium)
-                    .foregroundColor(Theme.textPrimary)
+                    .foregroundColor(Theme.textPrimaryLight)
             }
             Text("Rates updated daily. For accurate rates, check your bank or a live forex source before traveling.")
                 .font(.caption2)
-                .foregroundColor(Theme.textPrimary.opacity(0.5))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.5))
         }
         .padding(12)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(10)
     }
 
@@ -182,7 +183,7 @@ struct CurrencyView: View {
         VStack(alignment: .leading, spacing: 6) {
             Text("Bill Amount")
                 .font(.caption)
-                .foregroundColor(Theme.textPrimary.opacity(0.6))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.6))
 
             HStack {
                 Text("$")
@@ -195,11 +196,11 @@ struct CurrencyView: View {
                     .onChange(of: billAmount) { _, _ in calculateTip() }
             }
             .padding(12)
-            .background(Theme.surface)
+            .background(Theme.surfaceLight)
             .cornerRadius(10)
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
     }
 
@@ -208,7 +209,7 @@ struct CurrencyView: View {
             HStack {
                 Text("Tip Percentage")
                     .font(.caption)
-                    .foregroundColor(Theme.textPrimary.opacity(0.6))
+                    .foregroundColor(Theme.textPrimaryLight.opacity(0.6))
                 Spacer()
                 Text("\(Int(tipPercent))%")
                     .font(.subheadline)
@@ -227,8 +228,8 @@ struct CurrencyView: View {
                             .fontWeight(.medium)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 8)
-                            .background(Int(tipPercent) == pct ? Theme.sunsetOrange : Theme.surface)
-                            .foregroundColor(Int(tipPercent) == pct ? .white : Theme.textPrimary)
+                            .background(Int(tipPercent) == pct ? Theme.sunsetOrange : Theme.surfaceLight)
+                            .foregroundColor(Int(tipPercent) == pct ? .white : Theme.textPrimaryLight)
                             .cornerRadius(8)
                     }
                     .buttonStyle(.plain)
@@ -241,7 +242,7 @@ struct CurrencyView: View {
             .tint(Theme.sunsetOrange)
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
     }
 
@@ -255,18 +256,18 @@ struct CurrencyView: View {
             VStack(spacing: 4) {
                 Text("Per Person Split")
                     .font(.caption)
-                    .foregroundColor(Theme.textPrimary.opacity(0.5))
+                    .foregroundColor(Theme.textPrimaryLight.opacity(0.5))
                 Text("\(splitAmount(2).formatted(.currency(code: "USD"))) × 2 people")
                     .font(.subheadline)
-                    .foregroundColor(Theme.textPrimary)
+                    .foregroundColor(Theme.textPrimaryLight)
             }
             .padding(12)
             .frame(maxWidth: .infinity)
-            .background(Theme.surface)
+            .background(Theme.surfaceLight)
             .cornerRadius(10)
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
     }
 
@@ -312,7 +313,7 @@ struct CurrencyPicker: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(label)
                 .font(.caption2)
-                .foregroundColor(Theme.textPrimary.opacity(0.5))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.5))
 
             Menu {
                 ForEach(Currency.allCases, id: \.self) { currency in
@@ -330,14 +331,14 @@ struct CurrencyPicker: View {
                     Text(selected.code)
                         .font(.subheadline)
                         .fontWeight(.medium)
-                        .foregroundColor(Theme.textPrimary)
+                        .foregroundColor(Theme.textPrimaryLight)
                     Image(systemName: "chevron.down")
                         .font(.caption2)
-                        .foregroundColor(Theme.textPrimary.opacity(0.4))
+                        .foregroundColor(Theme.textPrimaryLight.opacity(0.4))
                 }
                 .padding(.horizontal, 10)
                 .padding(.vertical, 8)
-                .background(Theme.surface)
+                .background(Theme.surfaceLight)
                 .cornerRadius(8)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -354,7 +355,7 @@ struct TipResultCard: View {
         VStack(spacing: 4) {
             Text(title)
                 .font(.caption)
-                .foregroundColor(Theme.textPrimary.opacity(0.5))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.5))
             Text("$\(String(format: "%.2f", amount))")
                 .font(.title3)
                 .fontWeight(.bold)
@@ -362,7 +363,7 @@ struct TipResultCard: View {
         }
         .frame(maxWidth: .infinity)
         .padding(12)
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
         .cornerRadius(10)
     }
 }

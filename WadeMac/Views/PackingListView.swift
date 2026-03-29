@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct PackingListView: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appState: AppState
     @State private var selectedTripId: UUID?
     @State private var newItemText: String = ""
@@ -50,7 +51,7 @@ struct PackingListView: View {
                 emptyState
             }
         }
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
     }
 
     private var headerSection: some View {
@@ -61,23 +62,23 @@ struct PackingListView: View {
             Text("Packing List")
                 .font(.title3)
                 .fontWeight(.bold)
-                .foregroundColor(Theme.textPrimary)
+                .foregroundColor(Theme.textPrimaryLight)
             Spacer()
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
     }
 
     private var tripSelector: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text("Trip")
                 .font(.caption)
-                .foregroundColor(Theme.textPrimary.opacity(0.6))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.6))
 
             if appState.upcomingTrips.isEmpty {
                 Text("No trips yet — create one in Trip Planner")
                     .font(.caption)
-                    .foregroundColor(Theme.textPrimary.opacity(0.4))
+                    .foregroundColor(Theme.textPrimaryLight.opacity(0.4))
             } else {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
@@ -94,7 +95,7 @@ struct PackingListView: View {
             }
         }
         .padding(12)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(10)
     }
 
@@ -107,7 +108,7 @@ struct PackingListView: View {
             HStack {
                 Text("\(packed) of \(total) items packed")
                     .font(.subheadline)
-                    .foregroundColor(Theme.textPrimary)
+                    .foregroundColor(Theme.textPrimaryLight)
                 Spacer()
                 Button("Share") {
                     shareList(list)
@@ -119,7 +120,7 @@ struct PackingListView: View {
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
                     RoundedRectangle(cornerRadius: 4)
-                        .fill(Theme.surface)
+                        .fill(Theme.surfaceLight)
                         .frame(height: 8)
 
                     RoundedRectangle(cornerRadius: 4)
@@ -130,7 +131,7 @@ struct PackingListView: View {
             .frame(height: 8)
         }
         .padding(12)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(10)
     }
 
@@ -155,11 +156,11 @@ struct PackingListView: View {
                 .disabled(newItemText.isEmpty)
             }
             .padding(10)
-            .background(Theme.surface)
+            .background(Theme.surfaceLight)
             .cornerRadius(8)
         }
         .padding(12)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(10)
     }
 
@@ -167,13 +168,13 @@ struct PackingListView: View {
         VStack(spacing: 16) {
             Image(systemName: "bag")
                 .font(.system(size: 48))
-                .foregroundColor(Theme.textPrimary.opacity(0.2))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.2))
             Text("No packing list yet")
                 .font(.headline)
-                .foregroundColor(Theme.textPrimary.opacity(0.5))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.5))
             Text("Create a trip to generate your packing list")
                 .font(.caption)
-                .foregroundColor(Theme.textPrimary.opacity(0.3))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.3))
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -239,8 +240,8 @@ struct TripChip: View {
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
-            .background(isSelected ? Theme.oceanBlue : Theme.surface)
-            .foregroundColor(isSelected ? .white : Theme.textPrimary)
+            .background(isSelected ? Theme.oceanBlue : Theme.surfaceLight)
+            .foregroundColor(isSelected ? .white : Theme.textPrimaryLight)
             .cornerRadius(16)
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
@@ -264,11 +265,11 @@ struct PackingCategorySection: View {
                 Text(category.rawValue)
                     .font(.subheadline)
                     .fontWeight(.bold)
-                    .foregroundColor(Theme.textPrimary)
+                    .foregroundColor(Theme.textPrimaryLight)
                 Spacer()
                 Text("\(items.filter { $0.isPacked }.count)/\(items.count)")
                     .font(.caption)
-                    .foregroundColor(Theme.textPrimary.opacity(0.4))
+                    .foregroundColor(Theme.textPrimaryLight.opacity(0.4))
             }
 
             ForEach(items) { item in
@@ -278,7 +279,7 @@ struct PackingCategorySection: View {
             }
         }
         .padding(12)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(10)
     }
 }
@@ -291,13 +292,13 @@ struct PackingItemRow: View {
         HStack {
             Button(action: onToggle) {
                 Image(systemName: item.isPacked ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(item.isPacked ? Theme.palmGreen : Theme.textPrimary.opacity(0.3))
+                    .foregroundColor(item.isPacked ? Theme.palmGreen : Theme.textPrimaryLight.opacity(0.3))
             }
             .buttonStyle(.plain)
 
             Text(item.name)
                 .font(.subheadline)
-                .foregroundColor(item.isPacked ? Theme.textPrimary.opacity(0.5) : Theme.textPrimary)
+                .foregroundColor(item.isPacked ? Theme.textPrimaryLight.opacity(0.5) : Theme.textPrimaryLight)
                 .strikethrough(item.isPacked)
 
             Spacer()

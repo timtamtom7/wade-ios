@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct MenuBarView: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appState: AppState
 
     private var nextTrip: Trip? {
@@ -29,7 +30,7 @@ struct MenuBarView: View {
             }
             .padding(16)
         }
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
     }
 
     private var welcomeHeader: some View {
@@ -41,16 +42,16 @@ struct MenuBarView: View {
                 Text("Wade")
                     .font(.title2)
                     .fontWeight(.bold)
-                    .foregroundColor(Theme.textPrimary)
+                    .foregroundColor(Theme.textPrimaryLight)
                 Spacer()
                 Text(Date().formatted(date: .abbreviated, time: .omitted))
                     .font(.caption)
-                    .foregroundColor(Theme.textPrimary.opacity(0.4))
+                    .foregroundColor(Theme.textPrimaryLight.opacity(0.4))
             }
 
             Text("Your AI Travel Companion")
                 .font(.caption)
-                .foregroundColor(Theme.textPrimary.opacity(0.5))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.5))
         }
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -70,7 +71,7 @@ struct MenuBarView: View {
                 Text("Upcoming Trip")
                     .font(.caption)
                     .fontWeight(.medium)
-                    .foregroundColor(Theme.textPrimary.opacity(0.6))
+                    .foregroundColor(Theme.textPrimaryLight.opacity(0.6))
                 Spacer()
                 Image(systemName: trip.style.icon)
                     .foregroundColor(Theme.sunsetOrange)
@@ -82,11 +83,11 @@ struct MenuBarView: View {
                     Text(trip.destination)
                         .font(.title3)
                         .fontWeight(.bold)
-                        .foregroundColor(Theme.textPrimary)
+                        .foregroundColor(Theme.textPrimaryLight)
 
                     Text(trip.startDate.formatted(date: .abbreviated, time: .omitted))
                         .font(.caption)
-                        .foregroundColor(Theme.textPrimary.opacity(0.5))
+                        .foregroundColor(Theme.textPrimaryLight.opacity(0.5))
                 }
 
                 Spacer()
@@ -107,7 +108,7 @@ struct MenuBarView: View {
             }
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
     }
@@ -116,16 +117,16 @@ struct MenuBarView: View {
         VStack(spacing: 12) {
             Image(systemName: "airplane")
                 .font(.system(size: 36))
-                .foregroundColor(Theme.textPrimary.opacity(0.2))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.2))
 
             Text("No upcoming trips")
                 .font(.subheadline)
                 .fontWeight(.medium)
-                .foregroundColor(Theme.textPrimary.opacity(0.5))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.5))
 
             Text("Plan your next adventure in Trip Planner")
                 .font(.caption)
-                .foregroundColor(Theme.textPrimary.opacity(0.3))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.3))
 
             Button(action: { appState.selectedTab = .planner }) {
                 Text("Plan a Trip")
@@ -141,7 +142,7 @@ struct MenuBarView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(24)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
     }
 
@@ -183,7 +184,7 @@ struct MenuBarView: View {
                 Text("Quick Packing")
                     .font(.subheadline)
                     .fontWeight(.bold)
-                    .foregroundColor(Theme.textPrimary)
+                    .foregroundColor(Theme.textPrimaryLight)
             }
 
             if let list = appState.packingLists.first {
@@ -198,25 +199,25 @@ struct MenuBarView: View {
                         HStack {
                             Image(systemName: "circle")
                                 .font(.caption2)
-                                .foregroundColor(Theme.textPrimary.opacity(0.3))
+                                .foregroundColor(Theme.textPrimaryLight.opacity(0.3))
                             Text(item.name)
                                 .font(.caption)
-                                .foregroundColor(Theme.textPrimary)
+                                .foregroundColor(Theme.textPrimaryLight)
                             Spacer()
                             Text(item.category.rawValue)
                                 .font(.caption2)
-                                .foregroundColor(Theme.textPrimary.opacity(0.3))
+                                .foregroundColor(Theme.textPrimaryLight.opacity(0.3))
                         }
                     }
                 }
             } else {
                 Text("No packing list available")
                     .font(.caption)
-                    .foregroundColor(Theme.textPrimary.opacity(0.3))
+                    .foregroundColor(Theme.textPrimaryLight.opacity(0.3))
             }
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
     }
 
@@ -228,7 +229,7 @@ struct MenuBarView: View {
                 Text("Quick Access")
                     .font(.subheadline)
                     .fontWeight(.bold)
-                    .foregroundColor(Theme.textPrimary)
+                    .foregroundColor(Theme.textPrimaryLight)
             }
 
             VStack(spacing: 6) {
@@ -244,7 +245,7 @@ struct MenuBarView: View {
             }
         }
         .padding(16)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(12)
     }
 }
@@ -259,7 +260,7 @@ struct CountdownBadge: View {
                 .foregroundColor(Theme.oceanBlue)
             Text(days == 1 ? "day" : "days")
                 .font(.caption2)
-                .foregroundColor(Theme.textPrimary.opacity(0.5))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.5))
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
@@ -282,11 +283,11 @@ struct QuickActionButton: View {
                     .foregroundColor(color)
                 Text(title)
                     .font(.caption2)
-                    .foregroundColor(Theme.textPrimary)
+                    .foregroundColor(Theme.textPrimaryLight)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 8)
-            .background(Theme.surface)
+            .background(Theme.surfaceLight)
             .cornerRadius(8)
         }
         .buttonStyle(.plain)
@@ -307,14 +308,14 @@ struct StatCard: View {
             Text(value)
                 .font(.subheadline)
                 .fontWeight(.bold)
-                .foregroundColor(Theme.textPrimary)
+                .foregroundColor(Theme.textPrimaryLight)
             Text(title)
                 .font(.caption2)
-                .foregroundColor(Theme.textPrimary.opacity(0.4))
+                .foregroundColor(Theme.textPrimaryLight.opacity(0.4))
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
-        .background(Theme.cardBg)
+        .background(Theme.cardBgLight)
         .cornerRadius(10)
     }
 }
@@ -340,17 +341,17 @@ struct QuickAccessRow: View {
                     Text(title)
                         .font(.caption)
                         .fontWeight(.medium)
-                        .foregroundColor(Theme.textPrimary)
+                        .foregroundColor(Theme.textPrimaryLight)
                     Text(subtitle)
                         .font(.caption2)
-                        .foregroundColor(Theme.textPrimary.opacity(0.4))
+                        .foregroundColor(Theme.textPrimaryLight.opacity(0.4))
                 }
 
                 Spacer()
 
                 Image(systemName: "chevron.right")
                     .font(.caption2)
-                    .foregroundColor(Theme.textPrimary.opacity(0.2))
+                    .foregroundColor(Theme.textPrimaryLight.opacity(0.2))
             }
             .padding(.vertical, 6)
         }

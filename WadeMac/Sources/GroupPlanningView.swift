@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct GroupPlanningView: View {
+    @Environment(\.colorScheme) var colorScheme
     @StateObject private var viewModel: GroupPlanningViewModel
     @State private var selectedTripId: UUID?
     @State private var selectedSegment = 0
@@ -45,7 +46,7 @@ struct GroupPlanningView: View {
                 }
             }
         }
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
         .sheet(isPresented: $showAddExpense) {
             AddExpenseSheet(plan: $viewModel.plan)
         }
@@ -85,7 +86,7 @@ struct GroupPlanningView: View {
 
             Text("Plan together, split costs, vote on activities")
                 .font(.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundColor(ThemeToken.textSecondary(colorScheme))
         }
         .padding()
     }
@@ -135,19 +136,19 @@ struct GroupPlanningView: View {
                     if isSettled {
                         Text("Settled")
                             .font(.caption)
-                            .foregroundColor(.green)
+                            .foregroundColor(Theme.statusOpenLight)
                     } else if isOwing {
                         Text("is owed")
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(ThemeToken.textSecondary(colorScheme))
                         Text("$\(String(format: "%.2f", balance))")
                             .font(.subheadline)
                             .fontWeight(.semibold)
-                            .foregroundColor(.green)
+                            .foregroundColor(Theme.statusOpenLight)
                     } else {
                         Text("owes")
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(ThemeToken.textSecondary(colorScheme))
                         Text("$\(String(format: "%.2f", abs(balance)))")
                             .font(.subheadline)
                             .fontWeight(.semibold)
@@ -157,7 +158,7 @@ struct GroupPlanningView: View {
             }
         }
         .padding()
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
         .cornerRadius(12)
     }
 
@@ -165,14 +166,14 @@ struct GroupPlanningView: View {
         VStack(spacing: 16) {
             Image(systemName: "dollarsign.circle")
                 .font(.system(size: 48))
-                .foregroundColor(.secondary)
+                .foregroundColor(ThemeToken.textSecondary(colorScheme))
 
             Text("No expenses yet")
                 .font(.headline)
 
             Text("Add expenses to track who paid what")
                 .font(.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundColor(ThemeToken.textSecondary(colorScheme))
 
             Button("Add First Expense") {
                 showAddExpense = true
@@ -212,14 +213,14 @@ struct GroupPlanningView: View {
         VStack(spacing: 16) {
             Image(systemName: "checkmark.circle")
                 .font(.system(size: 48))
-                .foregroundColor(.secondary)
+                .foregroundColor(ThemeToken.textSecondary(colorScheme))
 
             Text("No votes yet")
                 .font(.headline)
 
             Text("Create a vote to decide things as a group")
                 .font(.subheadline)
-                .foregroundColor(.secondary)
+                .foregroundColor(ThemeToken.textSecondary(colorScheme))
 
             Button("Create First Vote") {
                 showCreateVote = true
@@ -247,6 +248,7 @@ struct GroupPlanningView: View {
 // MARK: - Expense Row
 
 struct ExpenseRowView: View {
+    @Environment(\.colorScheme) var colorScheme
     let expense: GroupExpense
 
     var body: some View {
@@ -269,7 +271,7 @@ struct ExpenseRowView: View {
 
                 Text("Paid by \(expense.paidByName) • \(expense.splitType.rawValue.capitalized) split")
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(ThemeToken.textSecondary(colorScheme))
             }
 
             Spacer()
@@ -280,7 +282,7 @@ struct ExpenseRowView: View {
                 .fontWeight(.semibold)
         }
         .padding()
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
         .cornerRadius(12)
     }
 }
@@ -288,6 +290,7 @@ struct ExpenseRowView: View {
 // MARK: - Vote Card
 
 struct VoteCardView: View {
+    @Environment(\.colorScheme) var colorScheme
     let vote: GroupVote
     let onVote: (UUID) -> Void
     let onClose: () -> Void
@@ -321,7 +324,7 @@ struct VoteCardView: View {
             HStack {
                 Text("\(vote.votedBy.count) votes")
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(ThemeToken.textSecondary(colorScheme))
 
                 Spacer()
 
@@ -339,7 +342,7 @@ struct VoteCardView: View {
             }
         }
         .padding()
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
         .cornerRadius(12)
     }
 
@@ -349,8 +352,8 @@ struct VoteCardView: View {
             .fontWeight(.bold)
             .padding(.horizontal, 8)
             .padding(.vertical, 4)
-            .background(vote.status == .open ? Color.green.opacity(0.2) : Color.gray.opacity(0.2))
-            .foregroundColor(vote.status == .open ? .green : .gray)
+            .background(vote.status == .open ? Theme.statusOpenLight.opacity(0.2) : Theme.statusClosedLight.opacity(0.2))
+            .foregroundColor(vote.status == .open ? Theme.statusOpenLight : Theme.statusClosedLight)
             .cornerRadius(4)
     }
 }
@@ -360,6 +363,7 @@ struct VoteOptionRow: View {
     let isSelected: Bool
     let isClosed: Bool
     let onTap: () -> Void
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         Button(action: onTap) {
@@ -386,7 +390,7 @@ struct VoteOptionRow: View {
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
-                    .stroke(isSelected ? Theme.oceanBlue : Color.secondary.opacity(0.3), lineWidth: 1)
+                    .stroke(isSelected ? Theme.oceanBlue : Theme.borderSubtleLight.opacity(0.3), lineWidth: 1)
             )
         }
         .buttonStyle(.plain)
@@ -397,6 +401,7 @@ struct VoteOptionRow: View {
 // MARK: - Member Row
 
 struct MemberRowView: View {
+    @Environment(\.colorScheme) var colorScheme
     let member: GroupMember
 
     var body: some View {
@@ -421,7 +426,7 @@ struct MemberRowView: View {
 
                 Text(member.role.rawValue.capitalized)
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(ThemeToken.textSecondary(colorScheme))
             }
 
             Spacer()
@@ -433,7 +438,7 @@ struct MemberRowView: View {
             }
         }
         .padding()
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
         .cornerRadius(12)
     }
 
@@ -441,7 +446,7 @@ struct MemberRowView: View {
         switch member.role {
         case .organizer: return .orange
         case .editor: return Theme.oceanBlue
-        case .viewer: return .gray
+        case .viewer: return ThemeToken.textSecondary(colorScheme)
         }
     }
 }

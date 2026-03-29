@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appState: AppState
 
     var body: some View {
@@ -28,7 +29,7 @@ struct ContentView: View {
             .tabViewStyle(.automatic)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
     }
 }
 
@@ -50,7 +51,7 @@ struct TabBar: View {
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
-        .background(Theme.surface)
+        .background(Theme.surfaceLight)
     }
 }
 
@@ -64,11 +65,11 @@ struct TabBarButton: View {
             VStack(spacing: 4) {
                 Image(systemName: tab.icon)
                     .font(.system(size: 14, weight: .medium))
-                    .foregroundColor(isSelected ? Theme.oceanBlue : Theme.textPrimary.opacity(0.5))
+                    .foregroundColor(isSelected ? Theme.oceanBlue : Theme.textPrimaryLight.opacity(0.5))
 
                 Text(tab.rawValue)
                     .font(.system(size: 10, weight: .medium))
-                    .foregroundColor(isSelected ? Theme.oceanBlue : Theme.textPrimary.opacity(0.5))
+                    .foregroundColor(isSelected ? Theme.oceanBlue : Theme.textPrimaryLight.opacity(0.5))
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 6)

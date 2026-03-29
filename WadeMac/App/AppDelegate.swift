@@ -25,6 +25,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func setupMainWindow() {
         let contentView = ContentView()
+            .injectTheme()
             .environmentObject(AppState())
 
         mainWindow = NSWindow(
@@ -38,7 +39,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         mainWindow?.contentView = NSHostingView(rootView: contentView)
         mainWindow?.titlebarAppearsTransparent = false
         mainWindow?.isReleasedWhenClosed = false
-        mainWindow?.backgroundColor = NSColor(Theme.surface)
+        mainWindow?.backgroundColor = NSColor(Theme.surfaceLight)
     }
 
     @objc private func toggleMainWindow() {
