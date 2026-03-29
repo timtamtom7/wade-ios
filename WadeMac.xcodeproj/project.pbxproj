@@ -10,6 +10,8 @@
 		00C024FA31D6E234BBF94FF9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C719EAC1DC3BC142C2A9F0BC /* AppDelegate.swift */; };
 		140D37096395E2854A4C804F /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888148842D602A266272C325 /* MenuBarView.swift */; };
 		2192FBBA73A92E29555997CF /* TravelUpdateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7FC7ACAD5B72821F3BD639 /* TravelUpdateService.swift */; };
+		408C0A83C7BF247FF1F2D71A /* GroupPlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F3413BEF4CAF63356F426D /* GroupPlanningView.swift */; };
+		522EDBE02A9457FEF931036C /* TravelSocialService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1549D68895DCAFD0250CB630 /* TravelSocialService.swift */; };
 		6624E5A6B83FFF20F54F9FC1 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A964BA4D3202095B13ED513E /* AppState.swift */; };
 		6916FB7E196D1FE2507796F6 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B9083F98E8FD8561615A4B /* main.swift */; };
 		73A0A9CEB6556F36539975D9 /* BookingIntegrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E00A92990DFFA3AA53917B /* BookingIntegrationView.swift */; };
@@ -18,18 +20,22 @@
 		938F1B7D812A9310952ABF99 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BACD4496233FDF2B8E4B6C /* Theme.swift */; };
 		A4BE0F9A3A5004FE7AFCBDFB /* CurrencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75ED0B2D044553192A879A9A /* CurrencyView.swift */; };
 		BA13ADBABFAAF3EB1ACC2034 /* PackingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 861D516F072C6BD41DC5D865 /* PackingListView.swift */; };
+		CF11360F8F972E10EFFE6398 /* TravelBuddiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352C2A68E2BE849A8FA6B8F4 /* TravelBuddiesView.swift */; };
 		D3F07A018738431D0AF7DDAF /* DestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 707A5A8D7D28443815889037 /* DestinationView.swift */; };
 		FF90E23BDBB152303DBEBF75 /* TripPlannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC525E37AEA5C5A7EF59D59 /* TripPlannerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1549D68895DCAFD0250CB630 /* TravelSocialService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelSocialService.swift; sourceTree = "<group>"; };
 		184D8E867C055AB66061836F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		23CDFB2C99731F0359A7D170 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		352C2A68E2BE849A8FA6B8F4 /* TravelBuddiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelBuddiesView.swift; sourceTree = "<group>"; };
 		707A5A8D7D28443815889037 /* DestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationView.swift; sourceTree = "<group>"; };
 		7478B2BF337165B7441FE6D3 /* AITripService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AITripService.swift; sourceTree = "<group>"; };
 		75ED0B2D044553192A879A9A /* CurrencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyView.swift; sourceTree = "<group>"; };
 		861D516F072C6BD41DC5D865 /* PackingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingListView.swift; sourceTree = "<group>"; };
 		888148842D602A266272C325 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		91F3413BEF4CAF63356F426D /* GroupPlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPlanningView.swift; sourceTree = "<group>"; };
 		A1E00A92990DFFA3AA53917B /* BookingIntegrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingIntegrationView.swift; sourceTree = "<group>"; };
 		A964BA4D3202095B13ED513E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		AB7FC7ACAD5B72821F3BD639 /* TravelUpdateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelUpdateService.swift; sourceTree = "<group>"; };
@@ -61,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				7478B2BF337165B7441FE6D3 /* AITripService.swift */,
+				1549D68895DCAFD0250CB630 /* TravelSocialService.swift */,
 				AB7FC7ACAD5B72821F3BD639 /* TravelUpdateService.swift */,
 			);
 			path = Services;
@@ -91,6 +98,8 @@
 			isa = PBXGroup;
 			children = (
 				A1E00A92990DFFA3AA53917B /* BookingIntegrationView.swift */,
+				91F3413BEF4CAF63356F426D /* GroupPlanningView.swift */,
+				352C2A68E2BE849A8FA6B8F4 /* TravelBuddiesView.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -187,9 +196,12 @@
 				8416D6EF73E604DA22D935A5 /* ContentView.swift in Sources */,
 				A4BE0F9A3A5004FE7AFCBDFB /* CurrencyView.swift in Sources */,
 				D3F07A018738431D0AF7DDAF /* DestinationView.swift in Sources */,
+				408C0A83C7BF247FF1F2D71A /* GroupPlanningView.swift in Sources */,
 				140D37096395E2854A4C804F /* MenuBarView.swift in Sources */,
 				BA13ADBABFAAF3EB1ACC2034 /* PackingListView.swift in Sources */,
 				938F1B7D812A9310952ABF99 /* Theme.swift in Sources */,
+				CF11360F8F972E10EFFE6398 /* TravelBuddiesView.swift in Sources */,
+				522EDBE02A9457FEF931036C /* TravelSocialService.swift in Sources */,
 				2192FBBA73A92E29555997CF /* TravelUpdateService.swift in Sources */,
 				FF90E23BDBB152303DBEBF75 /* TripPlannerView.swift in Sources */,
 				6916FB7E196D1FE2507796F6 /* main.swift in Sources */,
