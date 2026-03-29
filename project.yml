@@ -1,0 +1,25 @@
+name: WadeMac
+options:
+  bundleIdPrefix: com.tommaso
+  deploymentTarget:
+    macOS: "15.0"
+targets:
+  WadeMac:
+    type: application
+    platform: macOS
+    sources:
+      - path: WadeMac
+        excludes:
+          - "*.md"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.tommaso.wade.mac
+        PRODUCT_NAME: Wade
+        INFOPLIST_FILE: WadeMac/App/Info.plist
+        SWIFT_VERSION: "6.0"
+        MACOSX_DEPLOYMENT_TARGET: "15.0"
+        CODE_SIGN_IDENTITY: "-"
+        CODE_SIGN_STYLE: Manual
+        ENABLE_HARDENED_RUNTIME: YES
+        LD_RUNPATH_SEARCH_PATHS: "@executable_path/../Frameworks"
+        COMBINE_HIDPI_IMAGES: YES
