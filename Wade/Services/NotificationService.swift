@@ -10,7 +10,9 @@ final class NotificationService {
     func requestAuthorization() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
             if granted {
-                self.scheduleWeeklySummary()
+                Task { @MainActor in
+                    self.scheduleWeeklySummary()
+                }
             }
         }
     }

@@ -27,6 +27,7 @@ struct MessageBubbleView: View {
                         RoundedRectangle(cornerRadius: 20)
                             .fill(bubbleColor)
                     )
+                    .accessibilityLabel(message.role == .user ? "You said: \(message.text.prefix(50))" : "Wade said: \(message.text.prefix(50))")
 
                 Text(dateFormatter.string(from: message.timestamp))
                     .font(.caption2)

@@ -115,11 +115,11 @@ final class DatabaseService {
     func fetchLastMonth() -> [Transaction] {
         let calendar = Calendar.current
         let now = Date()
-        guard let lastMonthStart = calendar.date(byAdding: .month, value: -1, to: calendar.date(from: calendar.dateComponents([.year, .month], from: now))!),
-              let monthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: now)) else {
+        guard let currentMonthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: now)),
+              let lastMonthStart = calendar.date(byAdding: .month, value: -1, to: currentMonthStart) else {
             return []
         }
-        return fetchAll().filter { $0.date >= lastMonthStart && $0.date < monthStart }
+        return fetchAll().filter { $0.date >= lastMonthStart && $0.date < currentMonthStart }
     }
 
     func search(query: String) -> [Transaction] {

@@ -86,6 +86,7 @@ struct ConversationView: View {
                             Image(systemName: "chart.bar.doc.horizontal")
                                 .foregroundColor(Color(hex: "8a8a8a"))
                         }
+                        .accessibilityLabel("Send weekly summary")
 
                         Button {
                             showSettings = true
@@ -93,6 +94,7 @@ struct ConversationView: View {
                             Image(systemName: "gearshape.fill")
                                 .foregroundColor(Color(hex: "8a8a8a"))
                         }
+                        .accessibilityLabel("Settings")
                     }
                 }
             }
@@ -146,6 +148,7 @@ struct ConversationView: View {
                         .fill(Color(hex: "2a2a2e"))
                 )
                 .focused($isInputFocused)
+                .accessibilityHint("Enter expense amount and description, for example £12.50 lunch")
 
             Button {
                 sendMessage()
@@ -155,6 +158,7 @@ struct ConversationView: View {
                     .foregroundColor(inputText.isEmpty ? Color(hex: "3a3a3e") : Color(hex: "34c759"))
             }
             .disabled(inputText.isEmpty || isLoading)
+            .accessibilityLabel("Send")
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)

@@ -19,7 +19,7 @@ struct ParsedExpense {
     }
 }
 
-struct ExpenseParser {
+struct ExpenseParser: Sendable {
     private static let incomeKeywords = ["salary", "paid", "income", "got paid", "received", "earned", "deposit", "paycheck", "wage", "freelance", "consulting", "bonus", "dividend", "refund"]
     private static let expenseKeywords = ["spent", "bought", "paid", "for", "on", "at", "with", "buy", "purchase", "pickup", "pick up"]
 
