@@ -68,12 +68,12 @@ struct GraphicsPreviewView: View {
         } label: {
             Text(title)
                 .font(.system(size: 14, weight: selectedTab == tag ? .semibold : .regular))
-                .foregroundColor(selectedTab == tag ? DesignSystem.Colors.accentGreen : DesignSystem.Colors.tabInactive)
+                .foregroundColor(selectedTab == tag ? Color(hex: "34c759") : Color(hex: "8a8a8a"))
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(selectedTab == tag ? DesignSystem.Colors.accentGreen.opacity(0.15) : Color.clear)
+                        .fill(selectedTab == tag ? Color(hex: "34c759").opacity(0.15) : Color.clear)
                 )
         }
         .accessibilityLabel(title)
